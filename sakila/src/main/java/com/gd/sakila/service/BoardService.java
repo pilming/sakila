@@ -9,32 +9,47 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.BoardMapper;
+import com.gd.sakila.mapper.CommentMapper;
 import com.gd.sakila.vo.Board;
+import com.gd.sakila.vo.Comment;
 import com.gd.sakila.vo.Page;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class BoardService {
-	@Autowired
-	BoardMapper boardMapper;
+	@Autowired BoardMapper boardMapper;
+	@Autowired CommentMapper commentMapper;
+
+	
+	public int removeBoard(Board board) {
+		log.debug("▶▶▶▶▶▶ param: "+ board.toString());
+		return boardMapper.deleteBoard(board);
+	}
 	
 	public int addBoard(Board board) {
 		return boardMapper.insertBoard(board);
 	}
 	
 	public Map<String, Object> getBoardOne(int boardId) {
-		return boardMapper.selectBoardOne(boardId);
+      //1)상세보기
+      Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
+      //2)댓글 목록
+      List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
+      log.debug("commentList size() : "+ commentList.size());
+      
+      Map<String, Object> map = new HashMap<>();
+      map.put("boardMap", boardMap);
+      map.put("commentList", commentList);
+
+      return map;
 	}
-	
+
 	public Map<String, Object> getBoardList(int currentPage, int rowPerPage, String searchWord) {
 		//1
 		int boardTotal = boardMapper.selectBoardTotal(searchWord); // searchWord
-		/*
-		int lastPage = boardTotal / rowPerPage;
-		if(boardTotal % rowPerPage != 0) {
-			lastPage++;
-		}
-		*/
 		int lastPage = (int)(Math.ceil((double)boardTotal / rowPerPage));
 		
 		//2
