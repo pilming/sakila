@@ -16,19 +16,38 @@ import com.gd.sakila.vo.Page;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
-@Service
+@Slf4j //log객체 생성후 주입
+@Service //스프링에서 서비스 스캔 뉴객체생성
 @Transactional
 public class BoardService {
 	@Autowired BoardMapper boardMapper;
 	@Autowired CommentMapper commentMapper;
-
 	
-	public int removeBoard(Board board) {
-		log.debug("▶▶▶▶▶▶ param: "+ board.toString());
-		return boardMapper.deleteBoard(board);
+	// boardUpadte( 수정 액션 )
+	public int modifyBoard(Board board) {
+		log.debug("modifyBoard 에서 board : "+ board.toString());
+		return boardMapper.updateBoard(board);
 	}
-	
+	//삭제액션
+	public int removeBoard(Board board) {
+		log.debug("▶▶▶▶▶▶ removeBoard() param: "+ board.toString());
+		
+		
+		//2)게시글삭제 //fk를 지정하지않거나, fk를 delete no action으로
+		int boardRow = boardMapper.deleteBoard(board);
+		if(boardRow == 0) {
+			return 0;
+		}
+		log.debug("▶▶▶▶▶▶ removeBoard() boardRow: "+ boardRow);
+		
+		//1)댓글삭제
+		int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
+		log.debug("▶▶▶▶▶▶ removeBoard() commentRow: "+ commentRow);
+		
+		
+		return boardRow;
+	}
+	//추가액션
 	public int addBoard(Board board) {
 		return boardMapper.insertBoard(board);
 	}

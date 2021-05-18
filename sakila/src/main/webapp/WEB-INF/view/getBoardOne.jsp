@@ -12,6 +12,25 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ <script>
+   $(document).ready(function(){
+      console.log("document ready!");
+      $('#btn').click(function(){
+         console.log("btn click!");
+         if ($('#username').val().length < 3){
+        	 alert('username는 3자이상 이어야 합니다');
+        	 $('#username').focus();
+         } else if ($('#commentContent').val().length < 10) {
+             alert('commentContent는 10자이상 이어야 합니다');
+             $('#commentContent').focus();
+         } else {
+             $('#commentForm').submit();
+         }
+      });
+   });
+</script>
  
 </head>
 <body>
@@ -41,19 +60,35 @@
             </tr>
         </tbody>
     </table>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/modifyBoard?boardId=${map.boardId}">수정</a>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/removeBoard?boardId=${map.boardId}">삭제</a>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/getBoardList">글목록</a>
+    	<div>
+    		<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/modifyBoard?boardId=${boardMap.boardId}">수정</a>
+		    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/removeBoard?boardId=${boardMap.boardId}">삭제</a>
+		    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>	
+    	</div>
 	<!-- 댓글 목록 -->
+	<br>
 	<div>
-		<div><a href=""><button type="button">댓글추가</button></a></div>
+		<form action="${pageContext.request.contextPath}/admin/addComment" id= "commentForm" method = "post">
+			<input type = "hidden" name = "boardId" value="${boardMap.boardId}">
+			<div class="form-group">
+			  <label for="usr">userName:</label>
+			  <input type="text" id = "username"  name = "username" class="form-control" id="usr">
+			</div>
+			<div class="form-group">
+				<label for="comment">Comment:</label>
+				<textarea class="form-control" id="commentContent" name="commentContent" rows="3" cols="80"></textarea>
+			</div>
+			
+			<div><button class="btn btn-default" id="btn" type="button">댓글추가</button></div>
+		</form>
+		<br>
 		<table class="table">
 			<c:forEach var="c" items="${commentList}">
 				<tr>
 					<td>${c.commentContent}</td>
 					<td>${c.username}</td>
 					<td>${c.insertDate}</td>
-					<td><a href=""><button type="button">삭제</button></a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/removeComment?commentId=${c.commentId}&boardId=${c.boardId}"><button type="button" class="btn btn-default">삭제</button></a></td>
 				</tr>
 			</c:forEach>
 		</table>

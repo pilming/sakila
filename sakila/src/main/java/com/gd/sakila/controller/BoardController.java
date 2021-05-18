@@ -7,15 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
+import com.gd.sakila.vo.Comment;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequestMapping("/admin")
 public class BoardController {
 	@Autowired
 	BoardService boardService;
@@ -24,7 +27,11 @@ public class BoardController {
 	@GetMapping("/removeBoard")
 	public String removeBoard(Model model, @RequestParam(value = "boardId", required = true) int boardId) {
 		log.debug("▶▶▶▶▶▶ param: "+boardId);
-		model.addAttribute("boardId", boardId);
+		
+		Map<String, Object> map = boardService.getBoardOne(boardId);
+	    model.addAttribute("boardMap", map.get("boardMap"));
+	    log.debug("▶▶▶▶▶▶ boardMap: "+map.get("boardMap"));
+	    
 		return "removeBoard";
 	}
 	// C -> M -> redirect(C)
@@ -33,9 +40,9 @@ public class BoardController {
 		int row = boardService.removeBoard(board);
 		log.debug("removeBoard(): "+row);
 		if(row == 0) {
-			return "redirect:/getBoardOne?boardId="+board.getBoardId();
+			return "redirect:/admin/removeBoard?boardId="+board.getBoardId();
 		}
-		return "redirect:/getBoardList";
+		return "redirect:/admin/getBoardList";
 	}
 
 	
@@ -47,7 +54,7 @@ public class BoardController {
 	@PostMapping("/addBoard")
 	public String addBoard(Board board) { // 커맨드객체
 		boardService.addBoard(board);
-		return "redirect:/getBoardList";
+		return "redirect:/admin/getBoardList";
 	}
 	
 	
@@ -85,4 +92,32 @@ public class BoardController {
 		
 		return "getBoardList";
 	}
+	
+	
+	// 수정 폼
+   @GetMapping("/modifyBoard")
+   public String modifyBoard(Model model, @RequestParam(value = "boardId", required = true) int boardId) {
+      log.debug("modifyBoard() param : " +boardId); //디버깅
+      
+      // select
+      Map<String, Object> map = boardService.getBoardOne(boardId);
+      model.addAttribute("boardMap", map.get("boardMap"));
+      return "modifyBoard";
+   }
+   
+   // 수정 액션
+   @PostMapping("/modifyBoard")
+   public String modifyBoard(Board board) {
+      log.debug("modifyBoard() param : " +board.toString()); //디버깅
+    
+      // update
+      int row = boardService.modifyBoard(board);
+      log.debug("update row : " +row);
+      
+      if(row == 1) {
+    	  return "redirect:/admin/getBoardOne?boardId=" +board.getBoardId();
+      }
+   
+      return "redirect:/admin/modifyBoard?boardId=" +board.getBoardId();
+   }
 }
