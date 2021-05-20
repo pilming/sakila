@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
-import com.gd.sakila.vo.Comment;
+import com.gd.sakila.vo.BoardForm;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,8 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin")
 public class BoardController {
-	@Autowired
-	BoardService boardService;
+	@Autowired BoardService boardService;
 	
 	// 리턴타입 뷰이름 문자열 C -> V
 	@GetMapping("/removeBoard")
@@ -52,8 +51,9 @@ public class BoardController {
 	}
 	
 	@PostMapping("/addBoard")
-	public String addBoard(Board board) { // 커맨드객체
-		boardService.addBoard(board);
+	public String addBoard(BoardForm boardForm) { // 커맨드객체
+		log.debug("BoardController ▶▶▶▶▶▶ boardForm:" + boardForm);
+		boardService.addBoard(boardForm);
 		return "redirect:/admin/getBoardList";
 	}
 	
