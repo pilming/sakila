@@ -58,6 +58,26 @@
                    <td>insert_date :</td>
                    <td>${boardMap.insertDate}</td>
             </tr>
+            <tr>
+                   <td>boardfile :</td>
+                   <td>
+                   		<div>
+                   			<a href="${pageContext.request.contextPath}/admin/addBoardfile?boardId=${boardMap.boardId}"><button class="btn btn-default" type = "button">파일추가</button></a>
+                   		</div>
+                   		
+                   		<!-- 보드파일을 출력하는 반복문 코드 구현 -->
+                   		<c:forEach var="f" items="${boardfileList}">
+							<div>
+								<a href="${pageContext.request.contextPath}/resource/${f.boardfileName}">
+									${f.boardfileName}
+								</a>
+								<a href="${pageContext.request.contextPath}/admin/removeBoardfile?boardfileId=${f.boardfileId}&boardId=${f.boardId}&boardfileName=${f.boardfileName}"><button type="button">파일삭제</button></a>
+								
+							</div>
+						</c:forEach>
+                   		
+                   </td>
+            </tr>
         </tbody>
     </table>
     	<div>

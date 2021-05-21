@@ -36,25 +36,36 @@ public class BoardService {
 		log.debug("modifyBoard 에서 board : "+ board.toString());
 		return boardMapper.updateBoard(board);
 	}
-	//삭제액션
-	public int removeBoard(Board board) {
-		log.debug("▶▶▶▶▶▶ removeBoard() param: "+ board.toString());
-		
-		
-		//2)게시글삭제 //fk를 지정하지않거나, fk를 delete no action으로
-		int boardRow = boardMapper.deleteBoard(board);
-		if(boardRow == 0) {
-			return 0;
-		}
-		log.debug("▶▶▶▶▶▶ removeBoard() boardRow: "+ boardRow);
-		
-		//1)댓글삭제
-		int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
-		log.debug("▶▶▶▶▶▶ removeBoard() commentRow: "+ commentRow);
-		
-		
-		return boardRow;
-	}
+	// 삭제 액션
+		public int removeBoard(Board board) {
+			log.debug("▶▶▶▶▶▶ removeBoard() param: "+ board);
+			
+			// 1) 게시글삭제 FK를 지정하지 않은 경우
+			int boardRow = boardMapper.deleteBoard(board);
+			if(boardRow == 0) {
+				return 0;
+			}
+			
+			// 2) 댓글삭제
+			int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
+			
+			
+			// 3) 물리적 파일 삭제(/resource/안에 파일)
+			List<Boardfile> boardfileList = boardfileMapper.selectBoardfileByBoardId(board.getBoardId());
+			if(boardfileList != null) {
+				for(Boardfile f : boardfileList) {
+					File temp = new File(""); // 프로젝트 폴더에 빈파일이 만들어진다
+					String path = temp.getAbsolutePath(); // 프로젝트 폴더
+					File file = new File(path+"\\src\\main\\webapp\\resource\\"+f.getBoardfileName());
+					file.delete();
+				}
+			}
+			
+			// 4) 파일 테이블 행삭제
+			int boardfileRow = boardfileMapper.deleteBoardfileByBoardId(board.getBoardId());
+			
+			return boardRow;
+		}	
 	//추가액션
 	public void addBoard(BoardForm boardForm) {
 		log.debug("BoardService▶▶▶▶▶▶ parm boardForm: "+boardForm);
@@ -87,7 +98,11 @@ public class BoardService {
 				
 				//파일을 저장
 				try {
-					f.transferTo(new File("D:\\upload\\" + fileName));
+					File temp = new File(""); //프로젝트 폴더에 빈파일 만들어짐
+					
+					String path = temp.getAbsolutePath();
+					
+					f.transferTo(new File(path+"\\src\\main\\\\webapp\\resource\\" + fileName));
 				} catch (Exception e) {
 					throw new RuntimeException();
 				}
@@ -98,11 +113,15 @@ public class BoardService {
 	public Map<String, Object> getBoardOne(int boardId) {
       //1)상세보기
       Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
-      //2)댓글 목록
+      //2) boardfile목록
+      List<Boardfile> boardfileList = boardfileMapper.selectBoardfileByBoardId(boardId);
+      
+      //3)댓글 목록
       List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
       log.debug("commentList size() : "+ commentList.size());
       
       Map<String, Object> map = new HashMap<>();
+      map.put("boardfileList", boardfileList);
       map.put("boardMap", boardMap);
       map.put("commentList", commentList);
 

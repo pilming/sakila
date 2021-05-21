@@ -12,4 +12,25 @@
 		WHERE email = #{email} <!-- getEmail() -->
 		AND password = PASSWORD(#{password}) <!-- getPassword() -->
 	</select>
+	<select id="selectStaffViewList" resultType="com.gd.sakila.vo.StaffView">
+		SELECT
+			ID,
+			name,
+			SID
+		FROM
+			staff_list
+	</select>
+	<select id="selectStaffViewOne" parameterType="Integer" resultType="java.util.Map">
+		SELECT
+			id,
+			name,
+			address,
+			'zip code',
+			phone,
+			city,
+			country,
+			SID
+		FROM staff_list
+		WHERE id = #{staffId}
+	</select>
 </mapper>

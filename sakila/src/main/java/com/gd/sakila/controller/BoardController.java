@@ -57,7 +57,7 @@ public class BoardController {
 		return "redirect:/admin/getBoardList";
 	}
 	
-	
+
 	@GetMapping("/getBoardOne")
 	   public String getBoardOne(Model model, @RequestParam(value="boardId", required = true) int boardId) {
 	      // 디버깅 코드
@@ -69,6 +69,7 @@ public class BoardController {
 	      log.debug(" map : "+map); 
 	      
 	      model.addAttribute("boardMap", map.get("boardMap"));
+	      model.addAttribute("boardfileList", map.get("boardfileList"));
 	      model.addAttribute("commentList", map.get("commentList"));
 	      return "getBoardOne";
 	   }
