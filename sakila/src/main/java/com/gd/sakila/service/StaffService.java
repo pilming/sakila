@@ -29,10 +29,4 @@ public class StaffService {
 		log.debug("StaffService.getStaffViewList ▶▶▶▶▶▶ staffViewList :"+ staffViewList);
 		return staffViewList;
 	}
-	
-	public Map<String, Object> getStaffViewOne(int staffId) {
-		Map<String, Object> staffViewOne = staffMapper.selectStaffViewOne(staffId);
-		log.debug("StaffService.getStaffViewOne ▶▶▶▶▶▶  staffViewList :"+ staffViewOne);
-		return staffViewOne;
-	}
 }	

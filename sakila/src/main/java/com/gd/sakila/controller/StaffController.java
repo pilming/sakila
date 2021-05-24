@@ -28,13 +28,4 @@ public class StaffController {
 		model.addAttribute("staffViewList",staffViewList);
 		return "getStaffList";
 	}
-	
-	@GetMapping("/getStaffOne")
-	public String getStaffViewList(Model model,
-									@RequestParam(value = "id", required = true)int staffId) {
-		Map<String, Object> staffMap = staffService.getStaffViewOne(staffId);
-		log.debug("StaffController.getStaffViewList ▶▶▶▶▶▶ staffMap :"+ staffMap);
-		model.addAttribute("staffMap",staffMap);
-		return "getStaffOne";
-	}
 }

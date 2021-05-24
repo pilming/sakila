@@ -12,5 +12,4 @@ import com.gd.sakila.vo.StaffView;
 public interface StaffMapper {
 	Staff selectStaffByLogin(Staff staff);
 	List<StaffView> selectStaffViewList();
-	Map<String, Object> selectStaffViewOne(int staffId);
 }

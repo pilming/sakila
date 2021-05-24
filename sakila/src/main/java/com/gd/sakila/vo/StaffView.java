@@ -10,6 +10,6 @@ public class StaffView {
 	private String zipCode;
 	private String phone;
 	private String city;
-	private String contry;
+	private String country;
 	private int SID;
 }
