@@ -19,6 +19,7 @@
 	<h1>Home</h1>
 	<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
 	<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a>
+	<a href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>
 	<!-- 로그오프 일때 -->
 	<c:if test="${loginStaff == null}">
 		<form id = "loginForm" action="${pageContext.request.contextPath}/login" method="post">
