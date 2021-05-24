@@ -3,29 +3,33 @@
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
 	<select id="selectFilmList" parameterType="com.gd.sakila.vo.Page" resultType="com.gd.sakila.vo.FilmView">
 		SELECT 
-			FID FID,
-			title title,
-			description,
-			category,
-			price,
-			length,
-			rating,
-			actors
-		FROM 
-			nicer_but_slower_film_list
-		<where>
-			<if test="searchWord != null">
-				 title LIKE CONCAT('%',#{searchWord},'%') OR actors LIKE CONCAT('%',#{searchWord},'%')
-			</if>
-		</where>
-		ORDER BY FID ASC
+		   f.film_id FID, 
+		   f.title title,
+		   c.name category,
+		   GROUP_CONCAT(CONCAT(actor.first_name, _utf8mb4' ', actor.last_name) SEPARATOR ', ') AS actors,
+		   f.description description, 
+		   f.release_year releaseYear, 
+		   f.language_id languageId,
+		   f.rental_duration rentalDuration, 
+		   f.rental_rate price, 
+		   f.length LENGTH, 
+		   f.replacement_cost replacementCost, 
+		   f.rating rating, 
+		   f.special_features specialFeatures, 
+		   f.last_update lastUpdate
+		FROM film f 
+		   LEFT JOIN film_category fc ON f.film_id = fc.film_id
+		   LEFT JOIN category c ON fc.category_id = c.category_id
+		   LEFT OUTER JOIN film_actor ON f.film_id = film_actor.film_id
+		   LEFT OUTER JOIN actor ON film_actor.actor_id = actor.actor_id
+		GROUP BY f.film_id
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	<select id="selectFilmTotal" parameterType="String" resultType="int">
 		SELECT 
 			COUNT(*)
 		FROM
-			nicer_but_slower_film_list
+			film
 		<where>
 			<if test="searchWord != null">
 				title LIKE CONCAT('%',#{searchWord},'%')
@@ -61,5 +65,18 @@
 			film
 		WHERE
 			film_id = #{filmId}
+	</select>
+	<select id="selectCategoryList" resultType="string">
+		SELECT
+			name
+		FROM
+			category
+	</select>
+	
+	<select id="selectRatingList" resultType="string">
+		SELECT DISTINCT
+			rating
+		FROM
+			film
 	</select>
 </mapper>

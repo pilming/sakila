@@ -9,4 +9,6 @@ public class Page {
 	private int rowPerPage;
 	private int beginRow;
 	private String searchWord;
+	private String category;
+	private String rating;
 }

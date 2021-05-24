@@ -21,10 +21,19 @@ import lombok.extern.slf4j.Slf4j;
 public class FilmService {
 	@Autowired FilmMapper filmMapper;
 	
-	public Map<String, Object> getFilmList(int currentPage, int rowPerPage, String searchWord) {
+	public Map<String, Object> getFilmList(int currentPage, int rowPerPage, String searchWord, String category, String rating) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 currentPage : " + currentPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 rowPerPage : " + rowPerPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 searchWord : " + searchWord);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 category : " + category);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 rating : " + rating);
+		
+		//카테고리리스트 가져오기 정렬기능 사용하기위해
+		List<String> categoryList = filmMapper.selectCategoryList();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList categoryList :" + categoryList);
+		//관람가등급리스트 가져오기 정렬기능 사용하기위해
+		List<String> ratingList = filmMapper.selectRatingList();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList ratingList :" + ratingList);
 		
 		int filmTotal = filmMapper.selectFilmTotal(searchWord);
 		int lastPage = (int)Math.ceil((double)filmTotal/ rowPerPage);
@@ -36,6 +45,8 @@ public class FilmService {
 		page.setBeginRow((currentPage-1)*rowPerPage);
 		page.setRowPerPage(rowPerPage);
 		page.setSearchWord(searchWord);
+		page.setCategory(category);
+		page.setRating(rating);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList page :" + page);
 		
 		
@@ -43,6 +54,8 @@ public class FilmService {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList filmList :" + filmList);
 		
 		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("categoryList", categoryList);
+		returnMap.put("ratingList", ratingList);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("filmList", filmList);
 		return returnMap;

@@ -20,6 +20,53 @@
     <a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
 	<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a>
 	<a href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>
+	
+	
+	
+	<form action = "getFilmList" method="get"> 
+		<select name = "category">
+			<option value="">카테고리선택</option>
+			<c:forEach var ="c" items="${categoryList}">
+				<c:if test="${c == category}">
+					<option value="${c}" selected="selected">${c}</option>
+				</c:if>
+				<c:if test="${c != category}">
+					<option value="${c}">${c}</option>
+				</c:if>
+				
+			</c:forEach>
+		</select>
+	
+		<select name = "rating">
+			<option value="">관람가선택</option>
+			<c:forEach var ="r" items="${ratingList}">
+				<c:if test="${r == rating}">
+					<option value="${r}" selected="selected">${r}</option>
+					
+				</c:if>
+				<c:if test="${r != rating}">
+					<option value="${r}">${r}</option>	
+				</c:if>
+				
+			</c:forEach>
+		</select>
+		
+		<c:if test="${serchWord != null and serchWord != ''}">
+			<input name="searchWord" type="hidden" value="${searchWord}">
+		</c:if>
+		
+		<label for="searchWord">검색어(제목,배우이름) :</label> 
+        <input name="searchWord" type="text">
+        <c:if test="${category != null and category != ''}">
+			<input name="category" type="hidden" value="${category}">
+		</c:if>
+		<c:if test="${rating != null and rating!=''}">
+			<input name="rating" type="hidden" value="${rating}">
+		</c:if>
+        <button type="submit">검색</button>
+	</form>
+	
+	
     <table class="table table-striped">
         <thead>
             <tr>
@@ -49,13 +96,6 @@
             </c:forEach>
         </tbody>
     </table>
-    
-    <!-- 검색어 입력창 -->
-    <form action="getFilmList" method="get">
-        <label for="searchWord">검색어(제목,배우이름) :</label> 
-        <input name="searchWord" type="text">
-        <button type="submit">검색</button>
-    </form>
     
     <ul class="pager">
         <c:if test="${currentPage > 1}">

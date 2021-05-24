@@ -15,4 +15,6 @@ public interface FilmMapper {
 	int selectFilmTotal(String searchWord);
 	List<Integer> selectFilmInStock(Map<String, Object> map);
 	Map<String, Object> selectFilmOne(int filmId);
+	List<String> selectCategoryList();
+	List<String> selectRatingList();
 }
