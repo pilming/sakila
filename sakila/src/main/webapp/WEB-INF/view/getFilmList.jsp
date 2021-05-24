@@ -23,9 +23,9 @@
 	
 	
 	
-	<form action = "getFilmList" method="get"> 
+	<form action = "${pageContext.request.contextPath}/admin/getFilmList" method="get"> 
 		<select name = "category">
-			<option value="">카테고리선택</option>
+			<option value = "">카테고리선택</option>
 			<c:forEach var ="c" items="${categoryList}">
 				<c:if test="${c == category}">
 					<option value="${c}" selected="selected">${c}</option>
@@ -38,7 +38,7 @@
 		</select>
 	
 		<select name = "rating">
-			<option value="">관람가선택</option>
+			<option value = "">관람가선택</option>
 			<c:forEach var ="r" items="${ratingList}">
 				<c:if test="${r == rating}">
 					<option value="${r}" selected="selected">${r}</option>
@@ -52,16 +52,16 @@
 		</select>
 		
 		<c:if test="${serchWord != null and serchWord != ''}">
-			<input name="searchWord" type="hidden" value="${searchWord}">
+			<input name="searchWord" type="hidden" >
 		</c:if>
 		
 		<label for="searchWord">검색어(제목,배우이름) :</label> 
         <input name="searchWord" type="text">
-        <c:if test="${category != null and category != ''}">
-			<input name="category" type="hidden" value="${category}">
+        <c:if test="${category == '카테고리선택'}">
+			<input name="category" type="hidden" disabled="disabled">
 		</c:if>
-		<c:if test="${rating != null and rating!=''}">
-			<input name="rating" type="hidden" value="${rating}">
+		<c:if test="${rating =='관람가선택'}">
+			<input name="rating" type="hidden" disabled="disabled">
 		</c:if>
         <button type="submit">검색</button>
 	</form>
@@ -99,10 +99,10 @@
     
     <ul class="pager">
         <c:if test="${currentPage > 1}">
-            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
+            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}&category=${category}&rating=${rating}">이전</a></li>
         </c:if>
         <c:if test="${currentPage < lastPage}">
-            <li class="next"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
+            <li class="next"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&searchWord=${searchWord}&category=${category}&rating=${rating}">다음</a></li>
         </c:if>
     </ul>
 </div>

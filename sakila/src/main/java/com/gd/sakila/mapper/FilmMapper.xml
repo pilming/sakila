@@ -23,18 +23,43 @@
 		   LEFT OUTER JOIN film_actor ON f.film_id = film_actor.film_id
 		   LEFT OUTER JOIN actor ON film_actor.actor_id = actor.actor_id
 		GROUP BY f.film_id
+		
+		<if test="category != null and rating != null and searchWord != null">
+			<if test = "rating == ''">
+				having c.name = #{category} AND title LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+			<!-- 제목검색과 배우검색을 분리해야됨. -->
+			<if test = "rating != ''">
+				having c.name = #{category} AND rating = #{rating} AND title LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+		</if>
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
-	<select id="selectFilmTotal" parameterType="String" resultType="int">
+	
+	<!-- 매개변수로 페이지 전달 -->
+	
+	<select id="selectFilmTotal" parameterType="com.gd.sakila.vo.Page" resultType="int">
 		SELECT 
-			COUNT(*)
+			DISTINCT COUNT(*) OVER()
 		FROM
-			film
-		<where>
-			<if test="searchWord != null">
-				title LIKE CONCAT('%',#{searchWord},'%')
-			</if>
-		</where>
+			film f
+			LEFT JOIN film_category fc ON f.film_id = fc.film_id
+		    LEFT JOIN category c ON fc.category_id = c.category_id
+		    LEFT OUTER JOIN film_actor ON f.film_id = film_actor.film_id
+		    LEFT OUTER JOIN actor ON film_actor.actor_id = actor.actor_id
+		    <where>
+		    	<if test="category != null and rating != null and searchWord != null">
+					<if test = "rating == ''">
+						AND c.name = #{category} AND f.title LIKE CONCAT('%',#{searchWord},'%')
+					</if>
+					<!-- 제목검색과 배우검색을 분리해야됨. -->
+					<if test = "rating != ''">
+						AND c.name = #{category} AND f.rating = #{rating} AND f.title LIKE CONCAT('%',#{searchWord},'%')
+					</if>
+				</if>
+		    </where>
+		GROUP BY f.film_id
+		
 	</select>
 	<!-- Map : filmId(in), storeId(in), filmCount(out) -->
 	<select id="selectFilmInStock" parameterType="java.util.Map" resultType="int" statementType="CALLABLE">

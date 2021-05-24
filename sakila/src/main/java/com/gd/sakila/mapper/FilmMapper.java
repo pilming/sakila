@@ -12,7 +12,7 @@ import com.gd.sakila.vo.Page;
 @Mapper
 public interface FilmMapper {
 	List<FilmView> selectFilmList(Page page);
-	int selectFilmTotal(String searchWord);
+	int selectFilmTotal(Page page);
 	List<Integer> selectFilmInStock(Map<String, Object> map);
 	Map<String, Object> selectFilmOne(int filmId);
 	List<String> selectCategoryList();

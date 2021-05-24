@@ -35,10 +35,7 @@ public class FilmService {
 		List<String> ratingList = filmMapper.selectRatingList();
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList ratingList :" + ratingList);
 		
-		int filmTotal = filmMapper.selectFilmTotal(searchWord);
-		int lastPage = (int)Math.ceil((double)filmTotal/ rowPerPage);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList filmTotal :" + filmTotal);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList lastPage :" + lastPage);
+		
 		
 		
 		Page page = new Page();
@@ -49,6 +46,10 @@ public class FilmService {
 		page.setRating(rating);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList page :" + page);
 		
+		int filmTotal = filmMapper.selectFilmTotal(page);
+		int lastPage = (int)Math.ceil((double)filmTotal/ rowPerPage);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList filmTotal :" + filmTotal);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList lastPage :" + lastPage);
 		
 		List<FilmView> filmList = filmMapper.selectFilmList(page);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList filmList :" + filmList);
