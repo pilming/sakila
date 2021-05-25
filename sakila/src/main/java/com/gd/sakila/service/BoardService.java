@@ -137,8 +137,12 @@ public class BoardService {
 		Page page = new Page();
 		page.setBeginRow((currentPage-1)*rowPerPage);
 		page.setRowPerPage(rowPerPage);
-		page.setSearchWord(searchWord);
-		List<Board> boardList = boardMapper.selectBoardList(page); // Page
+		
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("page", page);
+		parmMap.put("searchWord", searchWord);
+		
+		List<Board> boardList = boardMapper.selectBoardList(parmMap); // Page
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("lastPage", lastPage);

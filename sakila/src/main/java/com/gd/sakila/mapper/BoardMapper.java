@@ -10,7 +10,7 @@ import com.gd.sakila.vo.Page;
 
 @Mapper
 public interface BoardMapper {
-	List<Board> selectBoardList(Page page);
+	List<Board> selectBoardList(Map<String, Object> parmMap);
 	int selectBoardTotal(String searchWord);
 	Map<String, Object> selectBoardOne(int boardId);
 	int insertBoard(Board board);

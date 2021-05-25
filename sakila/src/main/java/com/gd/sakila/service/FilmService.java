@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gd.sakila.mapper.CategoryMapper;
 import com.gd.sakila.mapper.FilmMapper;
+import com.gd.sakila.mapper.RentalRateMapper;
+import com.gd.sakila.mapper.RatingMapper;
 import com.gd.sakila.vo.Film;
 import com.gd.sakila.vo.FilmView;
 import com.gd.sakila.vo.Page;
@@ -20,45 +23,70 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class FilmService {
 	@Autowired FilmMapper filmMapper;
+	@Autowired CategoryMapper categoryMapper;
+	@Autowired RatingMapper ratingMapper;
+	@Autowired RentalRateMapper rentalRateMapper;
 	
-	public Map<String, Object> getFilmList(int currentPage, int rowPerPage, String searchWord, String category, String rating) {
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 currentPage : " + currentPage);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 rowPerPage : " + rowPerPage);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 searchWord : " + searchWord);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 category : " + category);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 rating : " + rating);
+	public Map<String, Object> getFilmList(Map<String, Object> parmMap) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 currentPage : " + parmMap.get("currentPage"));
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 rowPerPage : " + parmMap.get("rowPerPage"));
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 searchWord : " + parmMap.get("searchWord"));
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 searchActor : " + parmMap.get("searchActor"));
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 category : " + parmMap.get("category"));
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 rating : " + parmMap.get("rating"));
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 rentalRate : " + parmMap.get("rentalRate"));
 		
-		//카테고리리스트 가져오기 정렬기능 사용하기위해
-		List<String> categoryList = filmMapper.selectCategoryList();
+		int currentPage = (int)parmMap.get("currentPage");
+		int rowPerPage = (int)parmMap.get("rowPerPage");
+		String searchWord = (String)parmMap.get("searchWord");
+		String searchActor = (String)parmMap.get("searchActor");
+		String category = (String)parmMap.get("category");
+		String rating = (String)parmMap.get("rating");
+		String rentalRate = (String)parmMap.get("rentalRate");
+		
+		//카테고리리스트 가져오기 정렬기능 사용하기위해 카테고리mapper만들어서하기
+		List<String> categoryList = categoryMapper.selectCategoryList();
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList categoryList :" + categoryList);
 		//관람가등급리스트 가져오기 정렬기능 사용하기위해
-		List<String> ratingList = filmMapper.selectRatingList();
+		List<String> ratingList = ratingMapper.selectRatingList();
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList ratingList :" + ratingList);
+		//가격리스트 가져오기 정렬기능 위해서
+		List<String> rentalRateList = rentalRateMapper.selectRentalRateList();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList rateList :" + rentalRateList);
 		
 		
 		
 		
 		Page page = new Page();
-		page.setBeginRow((currentPage-1)*rowPerPage);
+		page.setBeginRow( (currentPage - 1 )*rowPerPage);
 		page.setRowPerPage(rowPerPage);
-		page.setSearchWord(searchWord);
-		page.setCategory(category);
-		page.setRating(rating);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList page :" + page);
 		
-		int filmTotal = filmMapper.selectFilmTotal(page);
+		Map<String, Object> tempMap = new HashMap<String, Object>();
+		tempMap.put("page", page);
+		tempMap.put("category", category);
+		tempMap.put("searchWord", searchWord);
+		tempMap.put("searchActor", searchActor);
+		tempMap.put("rating", rating);
+		tempMap.put("rentalRate", rentalRate);
+		
+		int filmTotal = filmMapper.selectFilmTotal(tempMap);
 		int lastPage = (int)Math.ceil((double)filmTotal/ rowPerPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList filmTotal :" + filmTotal);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList lastPage :" + lastPage);
 		
-		List<FilmView> filmList = filmMapper.selectFilmList(page);
+		List<FilmView> filmList = filmMapper.selectFilmList(tempMap);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList filmList :" + filmList);
 		
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("categoryList", categoryList);
 		returnMap.put("ratingList", ratingList);
+		returnMap.put("rentalRateList", rentalRateList);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("filmList", filmList);
+		returnMap.put("searchWord", searchWord);
+		returnMap.put("searchActor", searchActor);
+		
 		return returnMap;
 	}
 	
