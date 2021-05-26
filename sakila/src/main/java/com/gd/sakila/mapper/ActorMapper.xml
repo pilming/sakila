@@ -16,8 +16,7 @@
 			resultType="java.util.Map">
 		SELECT
 			actor_id actorId,
-			CONCAT(first_name, ' ', last_name) name,
-			film_info filmInfo
+			CONCAT(first_name, ' ', last_name) name
 		FROM actor_info
 		<where>
 			<if test="searchWord != null and searchWord!= ''">

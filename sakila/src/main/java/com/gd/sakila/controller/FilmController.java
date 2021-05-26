@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -95,5 +96,32 @@ public class FilmController {
 		model.addAttribute("rating", rating);
 		model.addAttribute("rentalRate", rentalRate);
 		return "getFilmOne";
+	}
+	
+	@GetMapping("/addFilmActor")
+	public String addFilmActor(Model model,
+								@RequestParam(value="filmId", required = true) int filmId) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor 매개변수 filmId : " + filmId);
+		
+		
+		
+		Map<String, Object> filmInfoAndActorList = filmService.getFilmInfoAndActorList(filmId);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor filmInfoAndActorList : " + filmInfoAndActorList);
+		
+		model.addAttribute("filmInfo", filmInfoAndActorList.get("filmInfo"));
+		model.addAttribute("actorList", filmInfoAndActorList.get("actorList"));
+		
+		return "addFilmActor";
+	}
+	
+	@PostMapping("/addFilmActor")
+	public String addFilmActor(Model model,
+								@RequestParam(value="actor")String[] actor) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor 매개변수 actor : " + actor);
+		for(String a : actor) {
+			log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor 매개변수 actor : " + a);
+		}
+		
+		return "";
 	}
 }

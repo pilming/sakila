@@ -69,7 +69,8 @@
                    <td>${filmOne.specialFeatures}</td>
             </tr>
             <tr>
-                   <td>actors :</td>
+                   <td>actors :<a href="${pageContext.request.contextPath}/admin/addFilmActor?filmId=${filmOne.filmId}"><button type ="button">배우추가</button></a></td>
+                   
                    <td>${filmOne.actors}</td>
             </tr>
             <tr>

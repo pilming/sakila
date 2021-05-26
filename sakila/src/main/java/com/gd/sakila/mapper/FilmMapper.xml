@@ -91,6 +91,27 @@
 		WHERE
 			film_id = #{filmId}
 	</select>
-	
-	
+	<select id="selectFilmInfo"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT
+			film_id filmId,
+			title title,
+			description description
+		FROM
+			film
+		WHERE
+			film_id = #{filmId}	
+	</select>
+	<select id="selectFilmActor"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT a.actor_id, a.first_name, a.last_name, if(t.actor_id IS NULL, 'F', 'T') checked
+		FROM
+		actor a LEFT JOIN (SELECT *
+								FROM film_actor
+								WHERE film_id = #{filmId}) t
+		ON a.actor_id = t.actor_id
+		ORDER BY a.first_name
+	</select>
 </mapper>

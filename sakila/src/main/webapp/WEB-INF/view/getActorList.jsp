@@ -25,7 +25,6 @@
             <tr>
                 <th>actorId</th>
                 <th>actorName</th>
-                <th>filmInfo</th>
             </tr>
         </thead>
         <tbody>
@@ -35,7 +34,6 @@
                 	<td>${a.actorId}</td>
                 	<!-- 상세페이지 작성예정 -->
                     <td><a href="${pageContext.request.contextPath}/admin/getActordOne?actorId=${a.actorId}">${a.name}</a></td>
-                    <td>${a.filmInfo}</td>
                 </tr>
             </c:forEach>
         </tbody>

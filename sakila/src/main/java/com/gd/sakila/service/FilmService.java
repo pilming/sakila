@@ -123,4 +123,20 @@ public class FilmService {
 		return returnMap;
 	}
 	
+	public Map<String, Object> getFilmInfoAndActorList(int filmId) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor 매개변수  filmId:" + filmId);
+		
+		Map<String, Object> filmInfo = filmMapper.selectFilmInfo(filmId);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor 매개변수  filmInfo:" + filmInfo);
+		
+		List<Map<String, Object>> actorList = filmMapper.selectFilmActor(filmId);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor 매개변수  actorList:" + actorList);
+		
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("filmInfo", filmInfo);
+		returnMap.put("actorList", actorList);
+		
+		return returnMap;
+	}
 }
