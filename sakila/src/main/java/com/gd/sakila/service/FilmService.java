@@ -58,7 +58,7 @@ public class FilmService {
 		
 		
 		Page page = new Page();
-		page.setBeginRow( (currentPage - 1 )*rowPerPage);
+		page.setBeginRow((currentPage - 1 )*rowPerPage);
 		page.setRowPerPage(rowPerPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList page :" + page);
 		

@@ -28,6 +28,7 @@ public class FilmController {
 							@RequestParam(value="category", required = false ) String category,
 							@RequestParam(value="rating", required = false ) String rating,
 							@RequestParam(value="rentalRate", required = false ) String rentalRate) { //Double이 쓰일일이 없어서 그냥 스트링으로
+		
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.getFilmList 매개변수 currentPage : " + currentPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.getFilmList 매개변수 rowPerPage : " + rowPerPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.getFilmList 매개변수 searchWord : " + searchWord);
