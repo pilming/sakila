@@ -105,23 +105,31 @@ public class FilmController {
 		
 		
 		
-		Map<String, Object> filmInfoAndActorList = filmService.getFilmInfoAndActorList(filmId);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor filmInfoAndActorList : " + filmInfoAndActorList);
+		Map<String, Object> filmOneMap = filmService.getFilmInfoAndActorList(filmId);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor filmOneMap : " + filmOneMap);
 		
-		model.addAttribute("filmInfo", filmInfoAndActorList.get("filmInfo"));
-		model.addAttribute("actorList", filmInfoAndActorList.get("actorList"));
+		model.addAttribute("filmOne", filmOneMap.get("filmOne"));
+		model.addAttribute("actorList", filmOneMap.get("actorList"));
+		model.addAttribute("filmId", filmId);
 		
 		return "addFilmActor";
 	}
 	
 	@PostMapping("/addFilmActor")
 	public String addFilmActor(Model model,
-								@RequestParam(value="actor")String[] actor) {
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor 매개변수 actor : " + actor);
+								@RequestParam(value="actor")String[] actor,
+								@RequestParam(value="filmId", required = true) int filmId) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor 매개변수 filmId : " + filmId);
 		for(String a : actor) {
 			log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor 매개변수 actor : " + a);
 		}
 		
-		return "";
+		Map<String, Object> parmMap = new HashMap<>();
+		parmMap.put("actor", actor);
+		parmMap.put("filmId", filmId);
+		
+		filmService.addFilmActor(parmMap);
+		
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
 	}
 }

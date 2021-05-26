@@ -124,19 +124,35 @@ public class FilmService {
 	}
 	
 	public Map<String, Object> getFilmInfoAndActorList(int filmId) {
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor 매개변수  filmId:" + filmId);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmInfoAndActorList 매개변수  filmId:" + filmId);
 		
-		Map<String, Object> filmInfo = filmMapper.selectFilmInfo(filmId);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor 매개변수  filmInfo:" + filmInfo);
+		Map<String, Object> filmOne = filmMapper.selectFilmOne(filmId);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmInfoAndActorList  filmOne:" + filmOne);
 		
 		List<Map<String, Object>> actorList = filmMapper.selectFilmActor(filmId);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor 매개변수  actorList:" + actorList);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmInfoAndActorList  actorList:" + actorList);
 		
 		
 		Map<String, Object> returnMap = new HashMap<>();
-		returnMap.put("filmInfo", filmInfo);
+		returnMap.put("filmOne", filmOne);
 		returnMap.put("actorList", actorList);
 		
 		return returnMap;
+	}
+	public void addFilmActor(Map<String,Object> map) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor 매개변수 map:" + map);
+		for(String n : (String[])map.get("actor")) {
+			String firstName = n.substring(0,  n.indexOf(" "));
+			String lastName = n.substring(n.indexOf(" ")+1);
+			log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor  firstName:" + firstName);
+			log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor  lastName:" + lastName);
+			
+			Map<String,Object> parmMap = new HashMap<String, Object>();
+			parmMap.put("firstName", firstName);
+			parmMap.put("lastName", lastName);
+			parmMap.put("filmId", map.get("filmId"));
+			int row = filmMapper.insertFilmActor(parmMap);
+			log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor  row:" + row);
+		}
 	}
 }
