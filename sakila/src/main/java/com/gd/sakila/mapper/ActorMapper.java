@@ -10,6 +10,7 @@ import com.gd.sakila.vo.Actor;
 @Mapper
 public interface ActorMapper {
 	int insertActor(Actor actor);
-	List<Map<String, Object>> selectActorInfoList(Map<String, Object> parmMap);
+	List<Map<String, Object>> selectActorList(Map<String, Object> parmMap);
 	int selectActorTotal(String searchWord);
+	List<Map<String,Object>> selectActorOne(int actorId);
 }

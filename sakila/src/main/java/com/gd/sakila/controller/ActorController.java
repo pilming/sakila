@@ -50,12 +50,25 @@ public class ActorController {
 		parmMap.put("searchWord", searchWord);
 		
 		Map<String, Object> actorMap = actorService.getActorList(parmMap);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorController.getActorList actorMap : " + actorMap);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorController.getActorList actorMap.size() : " + actorMap.size());
 		
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("searchWord",searchWord);
 		model.addAttribute("actorList",actorMap.get("actorList"));
 		model.addAttribute("lastPage", actorMap.get("lastPage"));
 		return "getActorList";
+	}
+	
+	@GetMapping("/getActordOne")
+	public String getActordOne(Model model,
+								@RequestParam(value = "actorId", required = false) int actorId) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorController.getActordOne 매개변수 actorId : " + actorId);
+		
+		List<Map<String, Object>> actorOneInfoList = actorService.getActorOne(actorId);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorController.getActorList actorOneInfoList.size() : " + actorOneInfoList.size());
+		
+		model.addAttribute("actorOneInfoList",actorOneInfoList);
+		
+		return "getActordOne";
 	}
 }

@@ -11,7 +11,7 @@
 		)
 	</insert>
 	
-	<select id ="selectActorInfoList" 
+	<select id ="selectActorList" 
 			parameterType="java.util.Map"
 			resultType="java.util.Map">
 		SELECT
@@ -37,5 +37,27 @@
 				AND (first_name LIKE CONCAT('%',#{searchWord},'%') OR last_name LIKE CONCAT('%',#{searchWord},'%'))
 			</if>
 		</where>
+	</select>
+	<select id="selectActorOne"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT 
+			fa.actor_id actorId,
+			CONCAT(a.first_name, ' ',a.last_name) name,
+			fa.film_id filmId, 
+			f.title title, 
+			c.name category
+		FROM 
+			film_actor fa
+		JOIN actor a
+			ON fa.actor_id = a.actor_id
+		JOIN film f 
+			ON fa.film_id = f.film_id
+		JOIN film_category fc 
+			ON fa.film_id = fc.film_id
+		JOIN category c 
+			ON fc.category_id = c.category_id
+		WHERE fa.actor_id = #{actorId}
+		ORDER BY c.name
 	</select>
 </mapper>
