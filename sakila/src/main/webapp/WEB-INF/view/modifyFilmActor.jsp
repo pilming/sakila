@@ -119,7 +119,7 @@
 	                				<input type="checkbox"  name="actorId" value="${a.actorId}" checked="checked" >${a.name}
 	                			</td>
 				    		</c:if>     
-	                		<!-- ¾ËÆÄºª°Ë»ç Ã¹±ÛÀÚ°¡ ´Ù¸£¸é ÁÙ¹Ù²Þ ÇØÁÖ°í Ã¹±ÛÀÚ Àû¾îÁÜ-->
+	                		<!-- ¾ËÆÄºª°Ë»ç Ã¹±ÛÀÚ°¡ ´Ù¸£¸é ÁÙ¹Ù²Þ ÇØÁÖ°í ¾ËÆÄºª º¯°æ, i ÃÊ±âÈ­ ÈÄ ¹Ù²ï ¾ËÆÄºªÀû¾îÁÜ-->
 	                		<c:if test="${alphabet != tempAlphabet}">
 	                			</tr><tr>
 					    		<c:set var="alphabet" value="${tempAlphabet}" />
@@ -127,7 +127,7 @@
 					    		<td><h4>${alphabet}</h4></td>
         						</tr><tr>
 					    		<td>
-	                				<input type="checkbox" checked="checked"  name="actorId" value="${a.actorId}">${a.name}
+	                				<input type="checkbox" name="actorId" value="${a.actorId}" checked="checked">${a.name}
 	                			</td>
 	                		</c:if>
 	                		           		
@@ -143,7 +143,7 @@
 		                			<input type="checkbox" name="actorId" value="${a.actorId}">${a.name}
 		                		</td>
 				    		</c:if>
-	                		<!-- ¾ËÆÄºª°Ë»ç Ã¹±ÛÀÚ°¡ ´Ù¸£¸é ÁÙ¹Ù²Þ ÇØÁÖ°í Ã¹±ÛÀÚ Àû¾îÁÜ-->
+	                		<!-- ¾ËÆÄºª°Ë»ç Ã¹±ÛÀÚ°¡ ´Ù¸£¸é ÁÙ¹Ù²Þ ÇØÁÖ°í ¾ËÆÄºª º¯°æ, i ÃÊ±âÈ­ ÈÄ ¹Ù²ï ¾ËÆÄºªÀû¾îÁÜ-->
 	                		<c:if test="${alphabet != tempAlphabet}">
 					    		</tr><tr>
 					    		<c:set var="alphabet" value="${tempAlphabet}" />
