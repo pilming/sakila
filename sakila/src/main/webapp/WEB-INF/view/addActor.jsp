@@ -45,6 +45,7 @@
 </head>
 <body>
     <div class="container">
+    
         <h1>ADD ACTOR</h1>
         <form id="addForm" action="${pageContext.request.contextPath}/admin/addActor" method="post">
         
