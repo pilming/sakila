@@ -69,7 +69,7 @@
                    <td>${filmOne.specialFeatures}</td>
             </tr>
             <tr>
-                   <td>actors :<a href="${pageContext.request.contextPath}/admin/addFilmActor?filmId=${filmOne.filmId}"><button type ="button">배우추가</button></a></td>
+                   <td>actors :</td>
                    
                    <td>${filmOne.actors}</td>
             </tr>
@@ -89,6 +89,7 @@
         </tbody>
     </table>
     	<div>
+    		<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/modifyFilmActor?filmId=${filmOne.filmId}">배우수정</a>
 		    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage}&searchWord=${searchWord}&category=${category}&rating=${rating}&rentalRate=${rentalRate}&searchActor=${searchActor}">글목록</a>	
     	</div>
 	

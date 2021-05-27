@@ -34,7 +34,7 @@
 	</select>
 	
 	<!-- 매개변수로 페이지 전달 맵으로 변경해야됨-->
-	<select id="selectFilmTotal" parameterType="java.util.Map" resultType="int">
+	<select id="selectFilmTotal" parameterType="java.util.Map" resultType="Integer">
 		SELECT 
 			COUNT(*)
 		FROM
@@ -59,7 +59,7 @@
 		
 	</select>
 	<!-- Map : filmId(in), storeId(in), filmCount(out) -->
-	<select id="selectFilmInStock" parameterType="java.util.Map" resultType="int" statementType="CALLABLE">
+	<select id="selectFilmInStock" parameterType="java.util.Map" resultType="Integer" statementType="CALLABLE">
       {
          call film_in_stock(
             #{filmId},
@@ -94,7 +94,7 @@
 	<select id="selectFilmActor"
 			parameterType="int"
 			resultType="java.util.Map">
-		SELECT a.actor_id, a.first_name, a.last_name, if(t.actor_id IS NULL, 'F', 'T') checked
+		SELECT a.actor_id actorId, CONCAT(a.first_name,' ',a.last_name) name, if(t.actor_id IS NULL, 'F', 'T') checked
 		FROM
 		actor a LEFT JOIN (SELECT *
 								FROM film_actor
@@ -108,9 +108,13 @@
 			actor_id,
 			film_id
 		) VALUES (
-			(SELECT actor_id FROM actor WHERE first_name = #{firstName} AND last_name = #{lastName}),
+			#{actorId},
 			#{filmId}
 		)
-		
 	</insert>
+	<delete id="deleteFilmActor"
+			parameterType="int">
+		DELETE FROM film_actor
+		WHERE film_id = #{filmId}
+	</delete>
 </mapper>

@@ -98,37 +98,42 @@ public class FilmController {
 		return "getFilmOne";
 	}
 	
-	@GetMapping("/addFilmActor")
-	public String addFilmActor(Model model,
+	@GetMapping("/modifyFilmActor")
+	public String modifyFilmActor(Model model,
 								@RequestParam(value="filmId", required = true) int filmId) {
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor 매개변수 filmId : " + filmId);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.modifyFilmActor 매개변수 filmId : " + filmId);
 		
 		
 		
 		Map<String, Object> filmOneMap = filmService.getFilmInfoAndActorList(filmId);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor filmOneMap : " + filmOneMap);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.modifyFilmActor filmOneMap size: " + filmOneMap.size());
 		
 		model.addAttribute("filmOne", filmOneMap.get("filmOne"));
 		model.addAttribute("actorList", filmOneMap.get("actorList"));
 		model.addAttribute("filmId", filmId);
 		
-		return "addFilmActor";
+		return "modifyFilmActor";
 	}
 	
-	@PostMapping("/addFilmActor")
-	public String addFilmActor(Model model,
-								@RequestParam(value="actor")String[] actor,
-								@RequestParam(value="filmId", required = true) int filmId) {
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor 매개변수 filmId : " + filmId);
-		for(String a : actor) {
-			log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilmActor 매개변수 actor : " + a);
-		}
+	@PostMapping("/modifyFilmActor")
+	public String modifyFilmActor(Model model,
+									@RequestParam(value="actorId", required = false)int[] actorId,
+									int filmId) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.modifyFilmActor 매개변수 filmId : " + filmId);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.modifyFilmActor 매개변수 actorId : " + actorId);
 		
 		Map<String, Object> parmMap = new HashMap<>();
-		parmMap.put("actor", actor);
+		
+		if(actorId != null) {
+			for(int a : actorId) {
+				log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.modifyFilmActor 매개변수 actor : " + a);
+			}
+			parmMap.put("actorId", actorId);
+		}
+		
 		parmMap.put("filmId", filmId);
 		
-		filmService.addFilmActor(parmMap);
+		filmService.modifyFilmActor(parmMap);
 		
 		return "redirect:/admin/getFilmOne?filmId="+filmId;
 	}

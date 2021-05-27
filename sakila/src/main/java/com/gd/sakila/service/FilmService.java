@@ -130,7 +130,7 @@ public class FilmService {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmInfoAndActorList  filmOne:" + filmOne);
 		
 		List<Map<String, Object>> actorList = filmMapper.selectFilmActor(filmId);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmInfoAndActorList  actorList:" + actorList);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmInfoAndActorList  actorList size:" + actorList.size());
 		
 		
 		Map<String, Object> returnMap = new HashMap<>();
@@ -139,20 +139,21 @@ public class FilmService {
 		
 		return returnMap;
 	}
-	public void addFilmActor(Map<String,Object> map) {
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor 매개변수 map:" + map);
-		for(String n : (String[])map.get("actor")) {
-			String firstName = n.substring(0,  n.indexOf(" "));
-			String lastName = n.substring(n.indexOf(" ")+1);
-			log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor  firstName:" + firstName);
-			log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor  lastName:" + lastName);
-			
-			Map<String,Object> parmMap = new HashMap<String, Object>();
-			parmMap.put("firstName", firstName);
-			parmMap.put("lastName", lastName);
-			parmMap.put("filmId", map.get("filmId"));
-			int row = filmMapper.insertFilmActor(parmMap);
-			log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.addFilmActor  row:" + row);
+	public void modifyFilmActor(Map<String,Object> map) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.modifyFilmActor 매개변수 map:" + map);
+		
+		int deleteRow = filmMapper.deleteFilmActor((int)map.get("filmId"));
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.modifyFilmActor deleteRow:" + deleteRow);
+		if(map.get("actorId") != null) {
+			for(int a : (int[])map.get("actorId")) {
+				log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.modifyFilmActor  actorId:" + a);
+				
+				Map<String,Object> parmMap = new HashMap<String, Object>();
+				parmMap.put("actorId", a);
+				parmMap.put("filmId", map.get("filmId"));
+				int insertRow = filmMapper.insertFilmActor(parmMap);
+				log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.modifyFilmActor insertRow:" + insertRow);
+			}
 		}
 	}
 }
