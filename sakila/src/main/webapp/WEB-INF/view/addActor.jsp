@@ -48,7 +48,6 @@
     
         <h1>ADD ACTOR</h1>
         <form id="addForm" action="${pageContext.request.contextPath}/admin/addActor" method="post">
-        
             <div class="form-group">
                 <label for="firstName">firstName :</label> 
                 <input class="form-control" name="firstName" id="firstName" type="text" />
