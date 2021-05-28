@@ -27,13 +27,12 @@
 		<select name = "category">
 			<option value = "">카테고리선택</option>
 			<c:forEach var ="c" items="${categoryList}">
-				<c:if test="${c == category}">
-					<option value="${c}" selected="selected">${c}</option>
+				<c:if test="${c.name == category}">
+					<option value="${c.name}" selected="selected">${c.name}</option>
 				</c:if>
-				<c:if test="${c != category}">
-					<option value="${c}">${c}</option>
+				<c:if test="${c.name != category}">
+					<option value="${c.name}">${c.name}</option>
 				</c:if>
-				
 			</c:forEach>
 		</select>
 	
@@ -47,7 +46,6 @@
 				<c:if test="${r != rating}">
 					<option value="${r}">${r}</option>	
 				</c:if>
-				
 			</c:forEach>
 		</select>
 		<select name = "rentalRate">
@@ -124,7 +122,9 @@
             </c:forEach>
         </tbody>
     </table>
-    
+    <div>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addFilm">영화추가</a>
+    </div>
     <ul class="pager">
         <c:if test="${currentPage > 1}">
             <li class="previous"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage-1}&searchWord=${searchWord}&category=${category}&rating=${rating}&rentalRate=${rentalRate}&searchActor=${searchActor}">이전</a></li>

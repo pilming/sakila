@@ -10,9 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CategoryMapper;
 import com.gd.sakila.mapper.FilmMapper;
-import com.gd.sakila.mapper.RentalRateMapper;
+import com.gd.sakila.mapper.LanguageMapper;
 import com.gd.sakila.mapper.RatingMapper;
+import com.gd.sakila.mapper.RentalRateMapper;
+import com.gd.sakila.vo.Category;
 import com.gd.sakila.vo.Film;
+import com.gd.sakila.vo.FilmForm;
 import com.gd.sakila.vo.FilmView;
 import com.gd.sakila.vo.Page;
 
@@ -26,6 +29,26 @@ public class FilmService {
 	@Autowired CategoryMapper categoryMapper;
 	@Autowired RatingMapper ratingMapper;
 	@Autowired RentalRateMapper rentalRateMapper;
+	@Autowired LanguageMapper languageMapper;
+	
+	//카테고리서비스로 이동예정
+	public List<Category> getCategoryList() {
+		return categoryMapper.selectCategoryList();
+	}
+	
+	public int addFilm(FilmForm filmForm) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.addFilm 매개변수 filmForm : " + filmForm);
+		Film film = filmForm.getFilm();
+		
+		filmMapper.insertFilm(film); //filmId가 생성된 후 film.setFilmId(생성된 값) 호출
+		
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("categoryId", filmForm.getCategory().getCategoryId());
+		parmMap.put("filmId", film.getFilmId());
+		filmMapper.insertFilmCategory(parmMap);
+		
+		return film.getFilmId();
+	}
 	
 	public Map<String, Object> getFilmList(Map<String, Object> parmMap) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 currentPage : " + parmMap.get("currentPage"));
@@ -45,7 +68,7 @@ public class FilmService {
 		String rentalRate = (String)parmMap.get("rentalRate");
 		
 		//카테고리리스트 가져오기 정렬기능 사용하기위해 카테고리mapper만들어서하기
-		List<String> categoryList = categoryMapper.selectCategoryList();
+		List<Category> categoryList = categoryMapper.selectCategoryList();
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList categoryList :" + categoryList);
 		//관람가등급리스트 가져오기 정렬기능 사용하기위해
 		List<String> ratingList = ratingMapper.selectRatingList();

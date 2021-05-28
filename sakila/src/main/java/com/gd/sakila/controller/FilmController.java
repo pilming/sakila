@@ -1,6 +1,7 @@
 package com.gd.sakila.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.FilmService;
+import com.gd.sakila.service.LanguageService;
+import com.gd.sakila.vo.Category;
+import com.gd.sakila.vo.FilmForm;
+import com.gd.sakila.vo.Language;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,6 +25,24 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class FilmController {
 	@Autowired FilmService filmService;
+	@Autowired LanguageService languageService;
+	
+	@GetMapping("/addFilm")
+	public String addFilm(Model model) {
+		List<Category> categoryList = filmService.getCategoryList();
+		List<Language> languageList = languageService.getLanguageList();
+		model.addAttribute("categoryList",categoryList);
+		model.addAttribute("languageList",languageList);
+		return "addFilm";
+	}
+
+	@PostMapping("/addFilm")
+	public String addFilm(FilmForm filmForm) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.addFilm 매개변수 filmForm.film : " + filmForm.getFilm());
+		int filmId = filmService.addFilm(filmForm); //참초타입은 필드면과name이 같으면 맵핑
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
+	}
+	
 	@GetMapping("/getFilmList")
 	public String getFilmList(Model model,
 							@RequestParam(value="currentPage", defaultValue = "1") int currentPage,

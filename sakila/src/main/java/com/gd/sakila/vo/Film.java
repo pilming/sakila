@@ -1,5 +1,7 @@
 package com.gd.sakila.vo;
 
+import java.util.Set;
+
 import lombok.Data;
 
 @Data
@@ -9,14 +11,12 @@ public class Film {
 	private String description;
 	private int releaseYear;
 	private int languageId;
-	private int originalLaguageId;
+	private int originalLanguageId;
 	private int rentalDuration;
 	private double rentalRate;
 	private int length;
 	private double replacementCost;
-	private enum rating {
-		G,PG,PG_13,R,NC_17 
-	}
-	private String[] specialFeatures = {"Trailers","Commentaries","Deleted Scenes","Behind the Scenes"};
+	private String rating;
+	private String specialFeatures;
 	private String lastUpdate;
 }

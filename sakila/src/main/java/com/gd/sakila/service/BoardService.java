@@ -131,6 +131,7 @@ public class BoardService {
 	public Map<String, Object> getBoardList(int currentPage, int rowPerPage, String searchWord) {
 		//1
 		int boardTotal = boardMapper.selectBoardTotal(searchWord); // searchWord
+		log.debug("BoardService▶▶▶▶▶▶ getBoardList: "+boardTotal);
 		int lastPage = (int)(Math.ceil((double)boardTotal / rowPerPage));
 		
 		//2

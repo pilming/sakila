@@ -26,7 +26,6 @@
 			</if>
 		</where>
 	</select>
-	
 	<select id="selectBoardOne" parameterType="Integer" resultType="java.util.Map">
 		SELECT
 			b.board_id boardId,

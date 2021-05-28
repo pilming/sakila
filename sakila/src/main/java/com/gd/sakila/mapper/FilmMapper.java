@@ -18,4 +18,6 @@ public interface FilmMapper {
 	List<Map<String, Object>> selectFilmActor(int filmId);
 	int insertFilmActor(Map<String, Object> map);
 	int deleteFilmActor(int filmId);
+	int insertFilm(Film film);
+	int insertFilmCategory(Map<String,Object> Map);
 }
