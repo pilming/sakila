@@ -13,11 +13,13 @@
 	
 	<select id ="selectActorList" 
 			parameterType="java.util.Map"
-			resultType="java.util.Map">
+			resultType="com.gd.sakila.vo.Actor">
 		SELECT
 			actor_id actorId,
-			CONCAT(first_name, ' ', last_name) name
-		FROM actor_info
+			first_name firstName,
+			last_name lastName
+			<!--CONCAT(first_name, ' ', last_name) name -->
+		FROM actor
 		<where>
 			<if test="searchWord != null and searchWord!= ''">
 				AND (first_name LIKE CONCAT('%',#{searchWord},'%') OR last_name LIKE CONCAT('%',#{searchWord},'%'))

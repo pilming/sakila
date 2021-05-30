@@ -48,7 +48,7 @@ public class ActorService {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorService.getActorList parmMap : " + parmMap);	
 		
 		//어차피 검색어 등등 다른것때문에 맵으로 넘겨주는데 굳이 page객체를 만들어서 전달 해야될까?? 그냥 page객체없이 전부 map으로 넘겨주면 안될까? --> 우선 기존 형식을 유지하기위해서 page객체 만들어서 진행
-		List<Map<String, Object>> actorList = actorMapper.selectActorList(parmMap);
+		List<Actor> actorList = actorMapper.selectActorList(parmMap);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorService.getActorList actorList.size() : " + actorList.size());
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
