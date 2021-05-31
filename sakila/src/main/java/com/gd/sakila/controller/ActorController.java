@@ -27,6 +27,7 @@ public class ActorController {
 	public String addActor() {
 		return "addActor";
 	}
+	
 	@PostMapping("/addActor")
 	public String addActor(Actor actor) {
 		int row = actorService.addActor(actor);
@@ -34,6 +35,8 @@ public class ActorController {
 		return "redirect:/admin/getActorList";
 	}
 	
+	
+
 	@GetMapping("/getActorList")
 	public String getActorList(Model model,
 								@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,

@@ -92,7 +92,7 @@
     		<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/modifyFilmActor?filmId=${filmOne.filmId}">배우수정</a>
 		    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage}&searchWord=${searchWord}&category=${category}&rating=${rating}&rentalRate=${rentalRate}&searchActor=${searchActor}">글목록</a>	
     	</div>
-	
+	<button type="button" onclick='history.back()'>뒤로라기</button>
 </div>
 </body>
 </html>
