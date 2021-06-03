@@ -21,6 +21,7 @@
 	<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a>
 	<a href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>
 	<a href="${pageContext.request.contextPath}/admin/getActorList">배우목록</a>
+	<a href="${pageContext.request.contextPath}/admin/getInventoryList">영화별재고목록</a>
 	<!-- 로그오프 일때 -->
 	<c:if test="${loginStaff == null}">
 		<form id = "loginForm" action="${pageContext.request.contextPath}/login" method="post">

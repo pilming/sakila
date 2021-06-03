@@ -111,6 +111,15 @@
          )
       }
    </select>
+   <select id="selectFilmNotInStock" parameterType="java.util.Map" resultType="Integer" statementType="CALLABLE">
+      {
+         call film_not_in_stock(
+            #{filmId},
+            #{storeId},
+            #{filmCount, mode=OUT, jdbcType=DECIMAL, javaType=Integer}
+         )
+      }
+   </select>
 	<select id="selectFilmOne" parameterType="int" resultType="java.util.Map">
 		SELECT
 			f.film_id filmId,

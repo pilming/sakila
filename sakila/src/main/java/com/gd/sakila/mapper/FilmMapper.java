@@ -14,6 +14,7 @@ public interface FilmMapper {
 	List<FilmView> selectFilmList(Map<String, Object> map);
 	int selectFilmTotal(Map<String, Object> map);
 	List<Integer> selectFilmInStock(Map<String, Object> map);
+	List<Integer> selectFilmNotInStock(Map<String, Object> map);
 	Map<String, Object> selectFilmOne(int filmId);
 	List<Map<String, Object>> selectFilmActor(int filmId);
 	int insertFilmActor(Map<String, Object> map);
