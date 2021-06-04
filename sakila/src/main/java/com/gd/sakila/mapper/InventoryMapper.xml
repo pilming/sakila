@@ -11,9 +11,9 @@
 			inventory i 
 			LEFT JOIN film f ON i.film_id = f.film_id 
 		<where>
-		<if test="searchWord!=null and searchWord != ''">
-			title LIKE CONCAT('%', #{searchWord}, '%')
-		</if>
+			<if test="searchWord!=null and searchWord != ''">
+				title LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
 		</where>
 		GROUP BY i.film_id, i.store_id
 		
@@ -82,9 +82,10 @@
 					inventory i 
 					LEFT JOIN rental r ON i.inventory_id = r.inventory_id
 				WHERE 
-					i.film_id = 1
+					i.film_id = #{filmId}
 				GROUP BY i.inventory_id) t
 				LEFT JOIN rental r ON t.rental_date = r.rental_date
+				GROUP BY t.inventory_id
 	</select>
 	<insert id="insertInventory"
 			parameterType="java.util.Map">

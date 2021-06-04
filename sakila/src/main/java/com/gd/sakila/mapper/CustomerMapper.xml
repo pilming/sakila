@@ -9,4 +9,64 @@
 		SET c.active = 0
 		WHERE c.customer_id = A.customer_id
 	</update>
+	<select id="selectCustomerList"
+			parameterType="java.util.Map"
+			resultType="java.util.Map">
+		SELECT 
+			c.customer_id customerId,
+			c.store_id storeId,
+			CONCAT(c.first_name,' ',c.last_name) name,
+			c.email email,
+			CASE
+			WHEN c.active = 1 THEN '활동'
+			ELSE '휴면'
+			END active
+		FROM 
+			customer c
+		<where>
+			<if test="storeId != 0">
+				AND c.store_id = #{storeId}
+			</if>
+			<if test="searchWord!=null and searchWord != ''">
+				AND CONCAT(c.first_name,' ',c.last_name) LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+		LIMIT #{page.beginRow}, #{page.rowPerPage}
+	</select>
+	<select id="selectCustomerTotal"
+			parameterType="java.util.Map"
+			resultType="Integer">
+		SELECT 
+			COUNT(*) 
+		FROM 
+			customer c
+		<where>
+			<if test="storeId != 0">
+				AND store_id = #{storeId}
+			</if>
+			<if test="searchWord !=null and searchWord != ''">
+				AND CONCAT(c.first_name,' ',c.last_name) LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+	</select>
+	<select id="selectCustomerOne"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT 
+			c.customer_id customerId,
+			c.store_id storeId,
+			CONCAT(c.first_name, ' ', c.last_name) name,
+			c.email email,
+			a.address address,
+			a.district district,
+			CASE
+			WHEN c.active = 1 THEN '활동'
+			ELSE '휴면'
+			END active,
+			c.create_date createDate
+		FROM 
+			customer c
+			JOIN address a ON c.address_id = a.address_id
+		WHERE c.customer_id = #{customerId}
+	</select>
 </mapper>
