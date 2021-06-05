@@ -69,4 +69,14 @@
 			JOIN address a ON c.address_id = a.address_id
 		WHERE c.customer_id = #{customerId}
 	</select>
+	<select id = "selectPaymentByCustomerId"
+			parameterType="int"
+			resultType="Double">
+		SELECT 
+			SUM(p.amount) total
+		 FROM 
+		 	payment p
+		 	WHERE p.customer_id = #{customerId}
+		GROUP BY p.customer_id
+	</select>
 </mapper>

@@ -27,6 +27,7 @@ public class CustomerController {
 								@RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage,
 								@RequestParam(value="storeId", defaultValue = "0" ) int storeId,
 								@RequestParam(value="searchWord", required = false ) String searchWord) {
+		long beforeTime = System.currentTimeMillis();
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶CustomerController.getCustomerList 매개변수 currentPage : " + currentPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶CustomerController.getCustomerList 매개변수 rowPerPage : " + rowPerPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶CustomerController.getCustomerList 매개변수 storeId : " + storeId);
@@ -48,6 +49,8 @@ public class CustomerController {
 		model.addAttribute("storeId", storeId);
 		model.addAttribute("searchWord", searchWord);
 		
+		long afterTime = System.currentTimeMillis();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶CustomerController.getCustomerList 딜레이 : " + (afterTime - beforeTime));
 		return "getCustomerList";
 	}
 	
@@ -65,9 +68,10 @@ public class CustomerController {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶CustomerController.getCustomerList 매개변수 customerId : " + customerId);
 		
 		
-		Map<String, Object> customerOne = customerService.getCustomerOne(customerId);
+		Map<String, Object> customerOneMap = customerService.getCustomerOne(customerId);
 		
-		model.addAttribute("customerOne", customerOne);
+		model.addAttribute("customerOne", customerOneMap.get("customerOne"));
+		model.addAttribute("customerOnePayment", customerOneMap.get("customerOnePayment"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("storeId", storeId);
 		model.addAttribute("searchWord", searchWord);

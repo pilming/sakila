@@ -29,11 +29,11 @@
 	</select>
 	<select id="selectActorTotal" 
 			parameterType="String" 
-			resultType="int">
+			resultType="Integer">
 		SELECT 
 			COUNT(*)
 		FROM
-			actor_info
+			actor
 		<where>
 			<if test="searchWord != null and searchWord!= ''">
 				AND (first_name LIKE CONCAT('%',#{searchWord},'%') OR last_name LIKE CONCAT('%',#{searchWord},'%'))

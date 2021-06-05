@@ -61,6 +61,14 @@ public class CustomerService {
 	public Map<String, Object> getCustomerOne(int customerId) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.getCustomerOne 매개변수 customerId : "+ customerId);
 		
-		return customerMapper.selectCustomerOne(customerId);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		returnMap.put("customerOne", customerMapper.selectCustomerOne(customerId));
+		returnMap.put("customerOnePayment", customerMapper.selectPaymentByCustomerId(customerId));
+		
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.getCustomerOne returnMap : "+ returnMap);
+		
+		return returnMap;
 	}
 }

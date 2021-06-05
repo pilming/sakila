@@ -11,4 +11,5 @@ public interface CustomerMapper {
 	List<Map<String, Object>> selectCustomerList(Map<String, Object> map);
 	int selectCustomerTotal(Map<String, Object> map);
 	Map<String, Object> selectCustomerOne(int customerId);
+	double selectPaymentByCustomerId(int customerId);
 }

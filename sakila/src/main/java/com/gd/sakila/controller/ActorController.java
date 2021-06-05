@@ -42,7 +42,6 @@ public class ActorController {
 								@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
 								@RequestParam(value="rowPerPagte", defaultValue = "10")int rowPerPage,
 								@RequestParam(value = "searchWord", required = false) String searchWord) {
-		
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorController.getActorList 매개변수 currentPage : " + currentPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorController.getActorList 매개변수 rowPerPage : " + rowPerPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorController.getActorList 매개변수 searchWord : " + searchWord);
@@ -52,13 +51,18 @@ public class ActorController {
 		parmMap.put("rowPerPage", rowPerPage);
 		parmMap.put("searchWord", searchWord);
 		
+		
+		
 		Map<String, Object> actorMap = actorService.getActorList(parmMap);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorController.getActorList actorMap.size() : " + actorMap.size());
+		
+		
 		
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("searchWord",searchWord);
 		model.addAttribute("actorList",actorMap.get("actorList"));
 		model.addAttribute("lastPage", actorMap.get("lastPage"));
+		
 		return "getActorList";
 	}
 	

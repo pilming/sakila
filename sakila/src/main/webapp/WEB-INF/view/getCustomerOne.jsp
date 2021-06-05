@@ -57,6 +57,10 @@
                    <td>createDate :</td>
                    <td>${customerOne.createDate}</td>
             </tr>
+            <tr>
+                   <td>paymentTotal :</td>
+                   <td>$${customerOnePayment}</td>
+            </tr>
         </tbody>
     </table>
     	<div>

@@ -26,13 +26,14 @@ public class ActorService {
 	
 	public Map<String, Object> getActorList(Map<String,Object> map) {
 		
+		
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorService.getActorList 매개변수 map : " + map);
 		
 		int currentPage = (int)map.get("currentPage");
 		int rowPerPage = (int)map.get("rowPerPage");
 		String searchWord = (String)map.get("searchWord");
 		
-		int actorTotal = actorMapper.selectActorTotal(searchWord);
+		int actorTotal = actorMapper.selectActorTotal(searchWord);		
 		int lastPage = (int)Math.ceil((double)actorTotal/ rowPerPage);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList filmTotal :" + actorTotal);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList lastPage :" + lastPage);
@@ -54,7 +55,6 @@ public class ActorService {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("actorList", actorList);
 		returnMap.put("lastPage", lastPage);
-		
 		
 		return returnMap;
 	}
