@@ -78,4 +78,11 @@ public class CustomerController {
 		
 		return "getCustomerOne";
 	}
+	
+	@GetMapping("addCustomer")
+	public String getCustomerList() {
+		
+		return "addCustomer";
+	}
+	
 }

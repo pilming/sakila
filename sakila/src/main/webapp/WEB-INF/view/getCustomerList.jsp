@@ -81,7 +81,7 @@
         </tbody>
     </table>
     <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/">고객추가</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addCustomer">고객추가</a>
     </div>
     <ul class="pager">
         <c:if test="${currentPage > 1}">
