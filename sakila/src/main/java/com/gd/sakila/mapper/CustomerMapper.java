@@ -12,4 +12,5 @@ public interface CustomerMapper {
 	int selectCustomerTotal(Map<String, Object> map);
 	Map<String, Object> selectCustomerOne(int customerId);
 	double selectPaymentByCustomerId(int customerId);
+	int selectBalckConsumer(int customerId);
 }

@@ -49,8 +49,12 @@ public class CustomerService {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.getCustomerList lastPage : "+ lastPage);
 		
 		List<Map<String, Object>> CustomerList = customerMapper.selectCustomerList(parmMap);
-		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.getCustomerList CustomerList.size : "+ CustomerList.size());
 		
+		for (Map<String, Object> m : CustomerList) {
+			int delayCount = customerMapper.selectBalckConsumer((int)m.get("customerId"));
+			m.put("delayCount", delayCount);
+		}
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.getCustomerList CustomerList.size : "+ CustomerList.size());
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("CustomerList", CustomerList);
@@ -64,7 +68,10 @@ public class CustomerService {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		returnMap.put("customerOne", customerMapper.selectCustomerOne(customerId));
+		Map<String, Object> customerOne = customerMapper.selectCustomerOne(customerId);
+		int delayCount = customerMapper.selectBalckConsumer(customerId);
+		customerOne.put("delayCount", delayCount);
+		returnMap.put("customerOne", customerOne);
 		returnMap.put("customerOnePayment", customerMapper.selectPaymentByCustomerId(customerId));
 		
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.getCustomerOne returnMap : "+ returnMap);

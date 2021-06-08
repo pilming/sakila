@@ -58,6 +58,15 @@
                    <td>${customerOne.createDate}</td>
             </tr>
             <tr>
+                   <td>blackList :</td>
+                   <c:if test="${customerOne.delayCount > 15}">
+               			<td style="color:red">BLACK CONSUMER</td>
+               		</c:if>
+               		<c:if test="${!(customerOne.delayCount > 15)}">
+               			<td>&nbsp;</td>
+               		</c:if>
+            </tr>
+            <tr>
                    <td>paymentTotal :</td>
                    <td>$${customerOnePayment}</td>
             </tr>

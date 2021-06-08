@@ -60,7 +60,8 @@
                 <th>store</th>
                 <th>name</th>
                 <th>email</th>
-                <th>active</th>
+                <th>status</th>
+                <th>blackList</th>
             </tr>
         </thead>
         <tbody>
@@ -76,6 +77,12 @@
                 	<td><a href ="${pageContext.request.contextPath}/admin/getCustomerOne?currentPage=${currentPage}&storeId=${storeId}&searchWord=${searchWord}&customerId=${c.customerId}">${c.name}</a></td>
                 	<td>${c.email}</td>
                 	<td>${c.active}</td>
+               		<c:if test="${c.delayCount > 15}">
+               			<td style="color:red">BLACK CONSUMER</td>
+               		</c:if>
+               		<c:if test="${!(c.delayCount > 15)}">
+               			<td>&nbsp;</td>
+               		</c:if>
                 </tr>
             </c:forEach>
         </tbody>
