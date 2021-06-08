@@ -7,9 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gd.sakila.mapper.AddressMapper;
 import com.gd.sakila.mapper.CustomerMapper;
+import com.gd.sakila.vo.CustomerForm;
 import com.gd.sakila.vo.Page;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class CustomerService {
 	@Autowired CustomerMapper customerMapper;
+	@Autowired AddressMapper addressMapper;
 	public void modifyCustomerActiveByscheduler() {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.modifyCustomerActiveByscheduler() 실행");
 		int row = customerMapper.updateCustomerActiveByscheduler();
@@ -51,7 +53,7 @@ public class CustomerService {
 		List<Map<String, Object>> CustomerList = customerMapper.selectCustomerList(parmMap);
 		
 		for (Map<String, Object> m : CustomerList) {
-			int delayCount = customerMapper.selectBalckConsumer((int)m.get("customerId"));
+			int delayCount = customerMapper.selectBlackConsumer((int)m.get("customerId"));
 			m.put("delayCount", delayCount);
 		}
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.getCustomerList CustomerList.size : "+ CustomerList.size());
@@ -69,7 +71,7 @@ public class CustomerService {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		Map<String, Object> customerOne = customerMapper.selectCustomerOne(customerId);
-		int delayCount = customerMapper.selectBalckConsumer(customerId);
+		int delayCount = customerMapper.selectBlackConsumer(customerId);
 		customerOne.put("delayCount", delayCount);
 		returnMap.put("customerOne", customerOne);
 		returnMap.put("customerOnePayment", customerMapper.selectPaymentByCustomerId(customerId));
@@ -78,4 +80,15 @@ public class CustomerService {
 		
 		return returnMap;
 	}
+	
+	public int addCustomer(CustomerForm customerForm) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.addCustomer 매개변수 customerForm : "+ customerForm);
+		int addAddressRow = addressMapper.insertAddressForCustomer(customerForm);
+		int addCustomerRow = customerMapper.insertCustomer(customerForm);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.addCustomer addAddressRow : "+ addAddressRow);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.addCustomer addCustomerRow : "+ addCustomerRow);
+		
+		return addCustomerRow;
+	}
+	
 }

@@ -79,7 +79,7 @@
 		 	WHERE p.customer_id = #{customerId}
 		GROUP BY p.customer_id
 	</select>
-	<select id="selectBalckConsumer" parameterType="int" resultType="int">
+	<select id="selectBlackConsumer" parameterType="int" resultType="int">
 		SELECT COUNT(*) FROM (SELECT r.customer_id customerId, i.inventory_id, i.film_id, r.rental_date, r.return_date,
 			DATEDIFF(r.return_date, r.rental_date) DAY,
 			if(DATEDIFF(r.return_date, r.rental_date) IS NULL, '대여중',
@@ -89,4 +89,11 @@
 		JOIN rental r ON r.inventory_id = i.inventory_id) e 
 		WHERE e.state='연체' AND e.customerId=#{customerId}
 	</select>
+	<!-- 고객 추가용(customer) -->
+   <insert id="insertCustomer" parameterType="com.gd.sakila.vo.CustomerForm">
+      <selectKey resultType="Integer" keyProperty="addressId" order="BEFORE">
+          SELECT LAST_INSERT_ID()
+       </selectKey>
+      INSERT INTO customer(store_id, first_name, last_name, email, address_id, active)  VALUES(#{storeId}, #{firstName}, #{lastName}, #{email}, #{addressId}, 1)
+   </insert>
 </mapper>

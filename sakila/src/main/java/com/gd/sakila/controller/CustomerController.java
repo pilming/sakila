@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gd.sakila.mapper.CityMapper;
 import com.gd.sakila.service.CustomerService;
+import com.gd.sakila.vo.City;
+import com.gd.sakila.vo.CustomerForm;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class CustomerController {
 	@Autowired CustomerService customerService;
-	
+	@Autowired CityMapper cityMapper;
 	@GetMapping("getCustomerList")
 	public String getCustomerList(Model model,
 								@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
@@ -77,9 +81,23 @@ public class CustomerController {
 	}
 	
 	@GetMapping("addCustomer")
-	public String getCustomerList() {
+	public String addCustomer(Model model) {
+		List<City> cityList = cityMapper.selectAllCity();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶CustomerController.addCustomer cityList.size() : " + cityList.size());
+		model.addAttribute("cityList",cityList);
 		
 		return "addCustomer";
 	}
+	
+	@PostMapping("/addCustomer")
+	public String addCustomer(CustomerForm customerForm) {
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶CustomerController.addCustomer 매개변수 customerForm : " + customerForm);
+		
+		int addRow = customerService.addCustomer(customerForm);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶CustomerController.addCustomer addRow : " + addRow);
+		
+		return "redirect:/admin/getCustomerList";
+	}
+	
 	
 }

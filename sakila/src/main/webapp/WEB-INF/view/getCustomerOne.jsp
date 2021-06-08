@@ -68,7 +68,13 @@
             </tr>
             <tr>
                    <td>paymentTotal :</td>
-                   <td>$${customerOnePayment}</td>
+                   <c:if test="${customerOnePayment != null}">
+               			<td>$${customerOnePayment}</td>
+               		</c:if>
+               		<c:if test="${!(customerOnePayment != null)}">
+               			<td>&nbsp;</td>
+               		</c:if>
+                   
             </tr>
         </tbody>
     </table>

@@ -12,7 +12,7 @@
 <!-- jquery를 사용하기위한 CDN주소 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-	$(document).ready(function() {
+	/* $(document).ready(function() {
 	    $('#addButton').click(function() {
 			if ($('#storId').val() == '') {
 	            alert('storId를 선택해야됩니다.');
@@ -21,14 +21,14 @@
 	            $('#addForm').submit();
 	        }
 	    });
-	});
+	}); */
 </script>
 <title>addCustomer</title>
 </head>
 <body>
    <div class="container">
       <h1>add customer</h1>
-      <form method="post" action="${pageContext.request.contextPath}/admin/addFilm" id="addFilmForm">
+      <form method="post" action="${pageContext.request.contextPath}/admin/addCustomer" id="addCustomer">
          <table class="table table-hover">
             <tr>
             	<td>store</td>
@@ -46,28 +46,58 @@
                   <input type="text" name="firstName" id="firstName" class="form-control">
                </td>
             </tr>
-            <tr>
+			 <tr>
                <td>lastName</td>
                <td>
-                  <input type="text" name="firstName" id="firstName" class="form-control">
+                  <input type="text" name="lastName" id="lastName" class="form-control">
                </td>
             </tr>
-            
-            <tr>
+             <tr>
                <td>email</td>
                <td>
-                  <input type="text" name="firstName" id="firstName" class="form-control">
+                  <input type="text" name="email" id="email" class="form-control">
+               </td>
+            </tr>
+             <tr>
+               <td>address</td>
+               <td>
+                  <input type="text" name="address" id="address" class="form-control">
+               </td>
+            </tr>
+             <tr>
+               <td>address2</td>
+               <td>
+                  <input type="text" name="address2" id="address2" class="form-control">
+               </td>
+            </tr>
+             <tr>
+               <td>district</td>
+               <td>
+                  <input type="text" name="district" id="district" class="form-control">
                </td>
             </tr>
             <!-- 주소데이터 가져와서 드랍다운으로 제공 -->
             <tr>
-               <td>address</td>
+            	<td>city</td>
+            	<td>
+	                <select name="cityId" id ="cityId" class="form-control">
+	                	<option value="">선택</option>
+		                <c:forEach var="c" items="${cityList}">
+                			<option value="${c.cityId}">${c.city}</option>
+		                </c:forEach>
+	                </select>
+            	</td>
+            </tr>
+             <tr>
+               <td>postalCode</td>
                <td>
-                  <select name="film.languageId" id ="language" class="form-control">
-                     <c:forEach var="lang" items="${languageList}">
-                        <option value="${lang.languageId}">${lang.name}</option>
-                     </c:forEach>
-                  </select>
+                  <input type="text" name="postalCode" id="postalCode" class="form-control">
+               </td>
+            </tr>
+             <tr>
+               <td>phone</td>
+               <td>
+                  <input type="text" name="phone" id="phone" class="form-control">
                </td>
             </tr>
          </table>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.AddressMapper">
+	<!-- 고객 추가용(address) -->
+   <insert id="insertAddressForCustomer" parameterType="com.gd.sakila.vo.CustomerForm">
+      INSERT INTO address(address, address2, district, city_id, postal_code, phone) VALUES(#{address}, #{address2}, #{district}, #{cityId}, #{postalCode}, #{phone})
+   </insert>
+   
+	
+</mapper>
