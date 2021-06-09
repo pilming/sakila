@@ -73,6 +73,7 @@ public class CustomerController {
 		
 		model.addAttribute("customerOne", customerOneMap.get("customerOne"));
 		model.addAttribute("customerOnePayment", customerOneMap.get("customerOnePayment"));
+		model.addAttribute("customerOneRentalHistory", customerOneMap.get("customerOneRentalHistory"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("storeId", storeId);
 		model.addAttribute("searchWord", searchWord);

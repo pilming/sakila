@@ -16,4 +16,5 @@ public interface CustomerMapper {
 	Double selectPaymentByCustomerId(int customerId);
 	int selectBlackConsumer(int customerId);
 	int insertCustomer(CustomerForm customerForm);
+	List<Map<String, Object>> selectCustomerRentalHisroty(int customerId);
 }

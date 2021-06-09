@@ -169,4 +169,12 @@
 		DELETE FROM film_actor
 		WHERE film_id = #{filmId}
 	</delete>
+	<select id="selectFilmName"
+			resultType="java.util.Map">
+		SELECT
+			f.film_id filmId,
+			f.title title
+		FROM 
+			film f
+	</select>
 </mapper>

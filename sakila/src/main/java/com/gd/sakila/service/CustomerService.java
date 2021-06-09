@@ -67,14 +67,14 @@ public class CustomerService {
 	public Map<String, Object> getCustomerOne(int customerId) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.getCustomerOne 매개변수 customerId : "+ customerId);
 		
-		
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		
 		Map<String, Object> customerOne = customerMapper.selectCustomerOne(customerId);
 		int delayCount = customerMapper.selectBlackConsumer(customerId);
 		customerOne.put("delayCount", delayCount);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("customerOne", customerOne);
 		returnMap.put("customerOnePayment", customerMapper.selectPaymentByCustomerId(customerId));
+		returnMap.put("customerOneRentalHistory", customerMapper.selectCustomerRentalHisroty(customerId));
 		
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.getCustomerOne returnMap : "+ returnMap);
 		

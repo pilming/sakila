@@ -96,4 +96,21 @@
        </selectKey>
       INSERT INTO customer(store_id, first_name, last_name, email, address_id, active)  VALUES(#{storeId}, #{firstName}, #{lastName}, #{email}, #{addressId}, 1)
    </insert>
+   	<select id="selectCustomerRentalHisroty"
+   			parameterType="int"
+   			resultType="java.util.Map">
+   		SELECT 
+			i.film_id filmId,
+			f.title title,
+			i.store_id storeId,
+			r.inventory_id inventoryId, 
+			if(r.return_date IS NULL , '대여중', '반납완료') state
+		FROM 
+			rental r 
+			JOIN inventory i ON r.inventory_id = i.inventory_id
+			JOIN film f ON i.film_id = f.film_id
+			WHERE r.customer_id = #{customerId}
+			ORDER BY r.rental_date DESC 
+			LIMIT 20
+   	</select>
 </mapper>
