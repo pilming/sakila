@@ -33,12 +33,9 @@
 			parameterType="java.util.Map"
 			resultType="java.util.Map">
 		SELECT 
-			r.rental_id,
-			r.rental_date,
-			r.return_date,
-			DATEDIFF(r.return_date,r.rental_date) diff,
-			f.rental_duration,
-			f.rental_rate
+			DATEDIFF(r.return_date,r.rental_date) dateCount,
+			f.rental_duration rentalDuration,
+			f.rental_rate rentalRate
 		FROM 
 			rental r
 			JOIN inventory i ON r.inventory_id = i.inventory_id

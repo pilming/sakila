@@ -78,7 +78,7 @@ $(document).ready(function(){
 		var btn = $(this);
 		var tr = btn.parent().parent();
 		var rentalId = tr.children().eq(0);
-		ver filmId = tr.children().eq(1);
+		var filmId = tr.children().eq(1);
 		
 		$('#paramZone').append('<input type = "hidden" name ="rentalId" value ="'+rentalId.text()+'">');
 		$('#paramZone').append('<input type = "hidden" name ="filmId" value ="'+filmId.text()+'">');

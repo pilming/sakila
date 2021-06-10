@@ -1,5 +1,6 @@
 package com.gd.sakila.service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,9 +45,22 @@ public class RentalService {
 		parmMap.put("filmId", filmId);
 		
 		Map<String,Object> ReturnInfo = rentalMapper.selectReturnInfo(parmMap);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶RentalService.modifyRental ReturnInfo : " + ReturnInfo);
 		
-		int delayCount = ReturnInfo.get("")
+		int dateCount = (int)ReturnInfo.get("dateCount");
+		int rentalDuration = (int)ReturnInfo.get("rentalDuration");
+		String delay = String.valueOf(dateCount-rentalDuration);
+		BigDecimal amount = (BigDecimal)ReturnInfo.get("rentalRate");
+		BigDecimal delayValue = new BigDecimal(delay);
+		if( (dateCount-rentalDuration) > 0) {
+			amount = amount.add(delayValue); //연체 1일당 1달러 추가
+		}
+		parmMap.put("amount", amount);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶RentalService.modifyRental amount : " + amount);
 		
-		return 1;
+		int modifyPaymentRow = paymentMapper.updatePayment(parmMap);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶RentalService.modifyRental modifyPaymentRow : " + modifyPaymentRow);
+		
+		return modifyPaymentRow;
 	}
 }

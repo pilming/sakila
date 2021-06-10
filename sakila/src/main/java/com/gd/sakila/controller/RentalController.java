@@ -30,8 +30,7 @@ public class RentalController {
 							@RequestParam(value="rentalInventoryId") int rentalInventoryId,
 							HttpSession session) {
 		Staff loginStaff = (Staff)session.getAttribute("loginStaff");
-		
-		int rentalStoreId = loginStaff.getStoreId();
+
 		int staffId = loginStaff.getStaffId();
 		
 		Map<String, Object> parmMap = new HashMap<String, Object>();

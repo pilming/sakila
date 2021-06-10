@@ -25,6 +25,11 @@
 	</insert>
 	<update id="updatePayment"
 			parameterType="java.util.Map">
-		
+		UPDATE 
+			payment p
+		SET 
+			p.amount = #{amount}
+		WHERE
+			p.rental_id = #{rentalId}
 	</update>
 </mapper>
