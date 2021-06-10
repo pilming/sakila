@@ -17,11 +17,14 @@
 <script>
 $(document).ready(function(){
 	$('#rentalBtn').click(function() {
+		$('#rentalTable').show();
 		console.log('rentalBtn clicked!');
+		
 		$.ajax({
 			type:'get',
 			url:'/filmTitle',
 			success: function(jsonData) {
+				$('#film').append('<option value="">선택</option>');
 				$(jsonData).each(function(index, item) {
 					$('#film').append(
 						'<option value="'+item.filmId+'">'+item.title+'</option>'
@@ -29,50 +32,58 @@ $(document).ready(function(){
 				});
 			}
 		});
+		
 		$('#film').change(function(){
-			console.log('store목록');
-			$('#store').empty();
-			$('#store').append(
-					'<option value="1">store1</option>'+
-					'<option value="2">store2</option>'	
-			);
-		});
-		$('#store').change(function(){
 			console.log('inventory목록');
-			$.ajax({
-				type:'get',
-				url:'/filmTitle',
-				success: function(jsonData) {
-					$(jsonData).each(function(index, item) {
-						$('#film').append(
-							'<option value="'+item.filmId+'">'+item.title+'</option>'
-						);
-					});
-				}
-			});
-		});
-    });
-});
-	
-	/*
-	
-	
-	$('#city').change(function(){
-		console.log('address 목록');
-		$.ajax({
-			type:'get',
-			url:'/address',
-			data:{cityId : $('#city').val()},
-			success: function(jsonData) {
-				$('#address').empty();
-				$(jsonData).each(function(index, item) {
-					$('#address').append(
-						'<option value="'+item.addressId+'">'+item.address+'</option>'
-					);
+			$('#inventory').empty();
+			$('#inventory').append('<option value="">선택</option>');
+			if($('#film').val() != '') {
+				$.ajax({
+					type:'get',
+					url:'/inventory',
+					data:{filmId : $('#film').val()},
+					success: function(jsonData) {
+						$(jsonData).each(function(index, item) {
+							$('#inventory').append(
+								'<option  value="'+item+'">'+item+'</option>'
+							);
+						});
+					}
 				});
 			}
-		}); // address 목록을 받아와서 address select 태그안에 option태그를 추가
-	}); */
+
+		});
+    });
+	
+	$('#rentalSubmitBtn').click(function() {    	
+    	if($('#film').val() == '') {
+    		alert('대여 할 film을 선택하세요');
+    		$('#film').focus();
+    	} else if ($('#store').val() == '') {
+    		alert('대여 할 store를 선택하세요');
+    		$('#store').focus();
+        } else if ($('#inventory').val() == '') {
+        	alert('대여 할 inventory를 선택하세요');
+    		$('#inventory').focus();
+        } else if ($('#staff').val() == '') {
+        	alert('대여 할 staff를 선택하세요');
+    		$('#staff').focus();
+        }else {
+            $('#rentalSubmitBtn').submit();
+        }
+    });
+	
+	$('.returnBtn').click(function() {    	
+		$('#paramZone').empty();
+		var btn = $(this);
+		var tr = btn.parent().parent();
+		var rentalId = tr.children().eq(0);
+		ver filmId = tr.children().eq(1);
+		
+		$('#paramZone').append('<input type = "hidden" name ="rentalId" value ="'+rentalId.text()+'">');
+		$('#paramZone').append('<input type = "hidden" name ="filmId" value ="'+filmId.text()+'">');
+    });
+});
 
 </script>
 </head>
@@ -143,49 +154,88 @@ $(document).ready(function(){
 	    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage}&searchWord=${searchWord}&storeId=${storeId}">고객목록</a>	
 	    <a class="btn btn-default" id = "rentalBtn">대여</a>
    	</div>
-   	<div id ="rentalZone">
-   		<select name="filmId" id="film"></select>
-		<select name="storeId" id="store"></select>
-		<select name="inventoryId" id="inventory"></select>
-   	</div>
+   	<form action ="${pageContext.request.contextPath}/admin/addRental" method="post" id ="rentalForm">
+   		<input type ="hidden" name = "customerId" value = "${customerOne.customerId}">
+   		<input type ="hidden" name = "currentPage" value = "${currentPage}">
+   		<input type ="hidden" name = "searchWord" value = "${searchWord}">
+   		<input type ="hidden" name = "storeId" value = "${storeId}">
+   		<table class="table" id ="rentalTable" style="display: none;">
+	   		<thead>
+	   			<tr>
+	   				<th>Film</th>
+	   				<th>Inventory</th>
+	   				<th>Rental</th>
+	   			</tr>
+	   		</thead>
+	   		<tbody>
+	   			<tr>
+	   				<td>
+	   					<select name="rentalFilmId" id="film" class="form-control">
+	   					</select>
+	   				</td>
+	   				<td>
+	   					<select name="rentalInventoryId" id="inventory" class="form-control">
+	   						<option>선택</option>
+	   					</select>
+	   				</td>
+	   				<td>
+	   					<button id="rentalSubmitBtn" class="btn btn-default">대여완료</button>
+	   				</td>
+	   			</tr>
+	   		</tbody>
+	   	</table>
+   	</form>
+  
     <br>
     <h3>RecentRentalHistory (최근 20건)</h3>
-     <table class="table">
-		<thead>
-			<tr>
-				<th>Film ID</th>
-				<th>Film Title</th>
-				<th>Store</th>
-				<th>Inventory Id</th>
-				<th>State</th>
-				<th>Return</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var = "h" items = "${customerOneRentalHistory}">
+    <form action="${pageContext.request.contextPath}/admin/addReturnDate" method="post" id ="RecentRentalHistoryForm">
+    	<input type ="hidden" name = "customerId" value = "${customerOne.customerId}">
+   		<input type ="hidden" name = "currentPage" value = "${currentPage}">
+   		<input type ="hidden" name = "searchWord" value = "${searchWord}">
+   		<input type ="hidden" name = "storeId" value = "${storeId}">
+    	<div id = "paramZone"></div>
+	    <table class="table">
+			<thead>
 				<tr>
-					<td>${h.filmId}</td>
-					<td>${h.title}</td>
-					<c:if test="${h.storeId == 1}">
-                		<td>store 1</td>
-                	</c:if>
-                	<c:if test="${h.storeId == 2}">
-                		<td>store 2</td>
-                	</c:if>
-					<td>${h.inventoryId}</td>
-					<td>${h.state}</td>
-					<c:if test="${h.state == '대여중'}">
-                		<td><button>반납</button></td>
-                	</c:if>
-                	<c:if test="${!(h.state == '대여중')}">
-                		<td>&nbsp;</td>
-                	</c:if>
+					<th>rental Id</th>
+					<th>Film ID</th>
+					<th>Film Title</th>
+					<th>Store</th>
+					<th>Inventory Id</th>
+					<th>State</th>
+					<th>Rate Amount</th>
+					<th>Return</th>
 				</tr>
-			</c:forEach>
+			</thead>
+			<tbody>
+				<c:forEach var = "h" items = "${customerOneRentalHistory}">
+					<tr>
+						<td>${h.rentalId}</td>
+						<td>${h.filmId}</td>
+						<td>${h.title}</td>
+						<c:if test="${h.storeId == 1}">
+	                		<td>store 1</td>
+	                	</c:if>
+	                	<c:if test="${h.storeId == 2}">
+	                		<td>store 2</td>
+	                	</c:if>
+						<td>${h.inventoryId}</td>
+						<td>${h.state}</td>
+						<td>${h.rateAmount}</td>
+						<c:if test="${h.state == '대여중'}">
+	                		<td><button class="btn btn-default returnBtn">반납</button></td>
+	                	</c:if>
+	                	<c:if test="${!(h.state == '대여중')}">
+	                		<td>&nbsp;</td>
+	                	</c:if>
+					</tr>
+				</c:forEach>
+				
 			
-		
-		</tbody>
-    </table>
+			</tbody>
+	    </table>
+    </form>
+    
     	
 </div>
 </body>

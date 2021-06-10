@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.RentalMapper">
+	<insert id="insertRental"
+			parameterType="java.util.Map">
+		<selectKey keyProperty="rentalId" resultType="Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO 
+			rental (
+				rental_date,
+				inventory_id,
+				customer_id,
+				staff_id
+			)
+			VALUES (
+				NOW(),
+				#{rentalInventoryId},
+				#{customerId},
+				#{staffId}
+			)
+	</insert>
+	<update id="updateReturnDate"
+			parameterType="int">
+		UPDATE 
+			rental r 
+		SET 
+			r.return_date = NOW()
+		WHERE 
+			r.rental_id = #{rentalId}
+	</update>
+	<select id="selectReturnInfo"
+			parameterType="java.util.Map"
+			resultType="java.util.Map">
+		SELECT 
+			r.rental_id,
+			r.rental_date,
+			r.return_date,
+			DATEDIFF(r.return_date,r.rental_date) diff,
+			f.rental_duration,
+			f.rental_rate
+		FROM 
+			rental r
+			JOIN inventory i ON r.inventory_id = i.inventory_id
+			JOIN film f ON i.film_id = f.film_id
+		WHERE f.film_id = #{filmId} AND r.rental_id = #{rentalId}
+	</select>
+</mapper>

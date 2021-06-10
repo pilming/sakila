@@ -84,6 +84,7 @@ public class CustomerService {
 	public int addCustomer(CustomerForm customerForm) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.addCustomer 매개변수 customerForm : "+ customerForm);
 		int addAddressRow = addressMapper.insertAddressForCustomer(customerForm);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.addCustomer addAddressRow 후 customerForm : "+ customerForm);
 		int addCustomerRow = customerMapper.insertCustomer(customerForm);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.addCustomer addAddressRow : "+ addAddressRow);
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.addCustomer addCustomerRow : "+ addCustomerRow);

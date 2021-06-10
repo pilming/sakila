@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerController {
 	@Autowired CustomerService customerService;
 	@Autowired CityMapper cityMapper;
-	@GetMapping("getCustomerList")
+	@GetMapping("/getCustomerList")
 	public String getCustomerList(Model model,
 								@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
 								@RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage,
@@ -55,7 +55,7 @@ public class CustomerController {
 		return "getCustomerList";
 	}
 	
-	@GetMapping("getCustomerOne")
+	@GetMapping("/getCustomerOne")
 	public String getCustomerList(Model model,
 								@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
 								@RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage,
@@ -81,7 +81,7 @@ public class CustomerController {
 		return "getCustomerOne";
 	}
 	
-	@GetMapping("addCustomer")
+	@GetMapping("/addCustomer")
 	public String addCustomer(Model model) {
 		List<City> cityList = cityMapper.selectAllCity();
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶CustomerController.addCustomer cityList.size() : " + cityList.size());

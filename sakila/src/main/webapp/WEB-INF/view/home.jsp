@@ -17,18 +17,13 @@
 </head>
 <body>
 	<h1>Home</h1>
-	<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
-	<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a>
-	<a href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>
-	<a href="${pageContext.request.contextPath}/admin/getActorList">배우목록</a>
-	<a href="${pageContext.request.contextPath}/admin/getInventoryList">영화별재고목록</a>
 	<!-- 로그오프 일때 -->
 	<c:if test="${loginStaff == null}">
 		<form id = "loginForm" action="${pageContext.request.contextPath}/login" method="post">
 			<div>email :</div>
-			<div><input type = "text" id = "email" name = "email"></div>
+			<div><input type = "text" id = "email" name = "email" value="Mike.Hillyer@sakilastaff.com"></div>
 			<div>password :</div>
-			<div><input type = "password" id="password" name = "password"></div>
+			<div><input type = "password" id="password" name = "password" value ="1234"></div>
 			<div>
 				<button id = "btn" type = "button">로그인</button>
 			</div>
@@ -39,6 +34,10 @@
 	<!-- 로그온 일때 -->
 	<c:if test="${loginStaff != null}">
 		<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
+		<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a>
+		<a href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>
+		<a href="${pageContext.request.contextPath}/admin/getActorList">배우목록</a>
+		<a href="${pageContext.request.contextPath}/admin/getInventoryList">영화별재고목록</a>
 		<a href="${pageContext.request.contextPath}/admin/logout">로그아웃</a>
 	</c:if>
 	
