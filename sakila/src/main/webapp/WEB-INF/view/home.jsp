@@ -6,11 +6,70 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+	// setup edit
+	let x = []
+	let y = []
+	$.ajax({
+	    url:'/salesByCategory',
+	    type:'get',
+	    success:function(json){
+	       // json -----> data.lebels, data.data
+	       $(json).each(function(index, item){ // 0번째 item  {"ration":"G", "cnt": 178}
+	          x.push(item.category);
+	          y.push(item.sales);
+	       });
+	    }
+	 });
+	console.log(x);
+	console.log(y);
 	$(document).ready(function() {
 		$('#btn').click(function () {
 			$('#loginForm').submit();
-		});
+		});	
+	   
+		   // setup
+		   let data = {
+		     labels: x,
+		     datasets: [{
+		       label: 'Sales By Film Category',
+		       data: y,
+		       backgroundColor: [
+		         'rgba(255, 99, 132, 0.2)',
+		         'rgba(255, 159, 64, 0.2)',
+		         'rgba(255, 205, 86, 0.2)',
+		         'rgba(75, 192, 192, 0.2)',
+		         'rgba(54, 162, 235, 0.2)'
+		       ],
+		       borderColor: [
+		         'rgb(255, 99, 132)',
+		         'rgb(255, 159, 64)',
+		         'rgb(255, 205, 86)',
+		         'rgb(75, 192, 192)',
+		         'rgb(54, 162, 235)'
+		       ],
+		       borderWidth: 1
+		     }]
+		   };
+		   
+		   // config
+		   const config = {
+		     type: 'bar',
+		     data: data,
+		     options: {
+		       scales: {
+		         y: {
+		           beginAtZero: true
+		         }
+		       }
+		     },
+		   };
+		   // 차트를 그리는 코드
+		   $('#chartBtn').click(function(){
+		      var myChart = new Chart(document.getElementById('myChart'), config);
+		   });
+		   
 	});
 </script>
 
@@ -41,7 +100,10 @@
 		<a href="${pageContext.request.contextPath}/admin/logout">로그아웃</a>
 	</c:if>
 	
-	
+	<button id="chartBtn">매출보기</button>
+	<div style="width: 800px; height: 800px;">
+	  <canvas id="myChart"></canvas>
+	</div>
 	
 </body>
 </html>
