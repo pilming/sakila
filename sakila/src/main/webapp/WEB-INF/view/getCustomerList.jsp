@@ -17,12 +17,7 @@
 <body>
 <div class="container">
     <h1>getFilmList</h1>
-    <a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
-	<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a>
-	<a href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>
-	<a href="${pageContext.request.contextPath}/admin/getActorList">배우목록</a>
-	<a href="${pageContext.request.contextPath}/admin/getInventoryList">영화별재고목록</a>
-	<a href="${pageContext.request.contextPath}/admin/getCustomerList">고객목록</a>
+    <jsp:include page="${pageContext.request.contextPath}/WEB-INF/inc/navigation.jsp"></jsp:include>
 	
 	<form action = "${pageContext.request.contextPath}/admin/getCustomerList" method="get"> 
 

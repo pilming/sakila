@@ -20,4 +20,8 @@ public class HomeRestController {
 	public  List<Map<String,Object>> getSalesByCategory() {
 		return salesMapper.selectSalesByFilmCategory();
 	}
+	@GetMapping("/monthlyTotal")
+	public  List<Map<String,Object>> getMonthlyTotal() {
+		return salesMapper.selectMonthlyTotal();
+	}
 }

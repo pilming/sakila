@@ -60,10 +60,58 @@
 					     },
 					   };
 					   // 차트를 그리는 코드
-					  var myChart = new Chart(document.getElementById('myChart'), config);
+					  var myChart = new Chart(document.getElementById('categorySalesChart'), config);
 		    }		 	
 		 });
-  
+		////////////////////////////////////////////////월별 매출
+		let month = []
+		let monthlySales = []
+		$.ajax({
+		    url:'/monthlyTotal',
+		    type:'get',
+		    success:function(json){
+		       // json -----> data.lebels, data.data
+		       $(json).each(function(index, item){
+		    	   month.push(item.month);
+		    	   monthlySales.push(item.total);
+		       });
+		       
+		       let data = {
+					     labels: month,
+					     datasets: [{
+					       label: 'Monthly Total',
+					       data: monthlySales,
+					       borderColor: 'rgb(255, 99, 132)',
+						   backgroundColor: 'rgb(255,182,193)'
+					     }]
+					   };
+					   
+					   // config
+					   const config = {
+					     type: 'bar',
+					     data: data,
+					     options: {
+					       scales: {
+					         y: {
+					           beginAtZero: true
+					         }
+					       },
+					       plugins: {
+					            title: {
+					                display: true,
+					                text: '월별 매출',
+					                padding: {
+					                    top: 10,
+					                    bottom: 30
+					                }
+					            }
+					        }
+					     },
+					   };
+					   // 차트를 그리는 코드
+					  var monthSalesChart = new Chart(document.getElementById('monthSalesChart'), config);
+		    }		 	
+		 });
 		   
 		   
 	});
@@ -88,18 +136,18 @@
 	
 	<!-- 로그온 일때 -->
 	<c:if test="${loginStaff != null}">
-		<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
-		<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a>
-		<a href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>
-		<a href="${pageContext.request.contextPath}/admin/getActorList">배우목록</a>
-		<a href="${pageContext.request.contextPath}/admin/getInventoryList">영화별재고목록</a>
+		<jsp:include page="${pageContext.request.contextPath}/WEB-INF/inc/navigation.jsp"></jsp:include>
 		<a href="${pageContext.request.contextPath}/admin/logout">로그아웃</a>
+		<div style="width: 800px; height: 800px;">
+			<div>
+				<canvas id="categorySalesChart"></canvas>
+			</div>
+		  <div>
+		  	<canvas id="monthSalesChart"></canvas>
+		  </div>
+		</div>
 	</c:if>
 	
-	<button id="chartBtn">매출보기</button>
-	<div style="width: 800px; height: 800px;">
-	  <canvas id="myChart"></canvas>
-	</div>
 	
 </body>
 </html>
