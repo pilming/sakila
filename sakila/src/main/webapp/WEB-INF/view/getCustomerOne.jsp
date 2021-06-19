@@ -22,7 +22,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type:'get',
-			url:'/filmTitle',
+			url:'${pageContext.request.contextPath}/filmTitle',
 			success: function(jsonData) {
 				$('#film').append('<option value="">º±≈√</option>');
 				$(jsonData).each(function(index, item) {
@@ -40,7 +40,7 @@ $(document).ready(function(){
 			if($('#film').val() != '') {
 				$.ajax({
 					type:'get',
-					url:'/inventory',
+					url:'${pageContext.request.contextPath}/inventory',
 					data:{filmId : $('#film').val()},
 					success: function(jsonData) {
 						$(jsonData).each(function(index, item) {
