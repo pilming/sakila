@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gd.sakila.service.StaffService;
 import com.gd.sakila.vo.Staff;
@@ -27,10 +28,10 @@ public class HomeController {
 	@GetMapping("/admin/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:/";//aws테스트 적용
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("/login")//aws테스트 적용
 	public String login(HttpSession session, Staff staff) { //servlet 세션 직접 사용, 컨트롤러 매서드의 매개변수는 DI대상
 		log.debug("HomeController ◆◆◆◆◆◆◆◆◆◆◆◆parm staff :" + staff);
 		Staff loginStaff =  staffService.login(staff);
@@ -39,7 +40,6 @@ public class HomeController {
 			session.setAttribute("loginStaff", loginStaff);
 			
 		} 
-		
-		return "redirect:/";
+		return "redirect:/";//aws테스트 적용
 	}
 }

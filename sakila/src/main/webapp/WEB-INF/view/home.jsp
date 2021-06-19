@@ -10,10 +10,11 @@
 <script>
 	
 	$(document).ready(function() {
+		/*
 		$('#btn').click(function () {
 			$('#loginForm').submit();
 		});	
-	   
+	   */
 		//////////////////////////////////////////////// 카테고리별 매출
 		let category = []
 		let categorySales = []
@@ -128,7 +129,7 @@
 			<div>password :</div>
 			<div><input type = "password" id="password" name = "password" value ="1234"></div>
 			<div>
-				<button id = "btn" type = "button">로그인</button>
+				<button id = "btn" type = "submit">로그인</button>
 			</div>
 			
 		</form>
