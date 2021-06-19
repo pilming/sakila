@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <h1>getFilmList</h1>
-    <jsp:include page="${pageContext.request.contextPath}/WEB-INF/inc/navigation.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/inc/navigation.jsp"></jsp:include>
 	
 	<form action = "${pageContext.request.contextPath}/admin/getCustomerList" method="get"> 
 

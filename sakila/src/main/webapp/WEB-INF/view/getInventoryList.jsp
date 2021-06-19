@@ -16,7 +16,7 @@
 </head>
 <div class="container">
     <h1>getInventoryList</h1>
-    <jsp:include page="${pageContext.request.contextPath}/WEB-INF/inc/navigation.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/inc/navigation.jsp"></jsp:include>
     <table class="table">
 		<thead>
 			<tr>

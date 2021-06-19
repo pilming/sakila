@@ -30,7 +30,7 @@ public class LoginFilter implements Filter {
 		
 		if(session.getAttribute("loginStaff") == null) {
 			if(response instanceof HttpServletResponse) {
-				((HttpServletResponse)response).sendRedirect("/sakila/");
+				((HttpServletResponse)response).sendRedirect("/");
 			}
 			return;
 		}

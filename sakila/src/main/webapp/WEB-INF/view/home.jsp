@@ -18,7 +18,7 @@
 		let category = []
 		let categorySales = []
 		$.ajax({
-		    url:'/salesByCategory',
+		    url:'${pageContext.request.contextPath}/salesByCategory',
 		    type:'get',
 		    success:function(json){
 		       // json -----> data.lebels, data.data
@@ -67,7 +67,7 @@
 		let month = []
 		let monthlySales = []
 		$.ajax({
-		    url:'/monthlyTotal',
+		    url:'${pageContext.request.contextPath}/monthlyTotal',
 		    type:'get',
 		    success:function(json){
 		       // json -----> data.lebels, data.data
@@ -136,7 +136,7 @@
 	
 	<!-- 로그온 일때 -->
 	<c:if test="${loginStaff != null}">
-		<jsp:include page="${pageContext.request.contextPath}/WEB-INF/inc/navigation.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/inc/navigation.jsp"></jsp:include>
 		<a href="${pageContext.request.contextPath}/admin/logout">로그아웃</a>
 		<div style="width: 800px; height: 800px;">
 			<div>
