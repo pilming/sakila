@@ -23,7 +23,13 @@ public class ActorService {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorService.addActor 매개변수 actor : " + actor);
 		return actorMapper.insertActor(actor);
 	}
-	
+	public List<Actor> getActorList() {
+		List<Actor> actorList = actorMapper.selectActorList();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorService.getActorList actorList.size() : " + actorList.size());
+
+		return actorList;
+	}
+	/*ui적용하면서 간소화
 	public Map<String, Object> getActorList(Map<String,Object> map) {
 		
 		
@@ -58,6 +64,7 @@ public class ActorService {
 		
 		return returnMap;
 	}
+	*/
 	public List<Map<String, Object>> getActorOne(int actorId) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorService.getActorOne 매개변수 actorId : " + actorId);
 		

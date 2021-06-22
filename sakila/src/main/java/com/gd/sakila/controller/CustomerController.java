@@ -26,6 +26,17 @@ public class CustomerController {
 	@Autowired CustomerService customerService;
 	@Autowired CityMapper cityMapper;
 	@GetMapping("/getCustomerList")
+	public String getCustomerList(Model model) {
+		
+		List<Map<String, Object>> customerList = customerService.getCustomerList();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶CustomerController.getCustomerList 매개변수 customerList : " + customerList);
+		model.addAttribute("customerList", customerList);
+		
+		return "getCustomerList";
+	}
+	//ui적용하면서 외부 cdn 사용
+	/*
+	@GetMapping("/getCustomerList")
 	public String getCustomerList(Model model,
 								@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
 								@RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage,
@@ -54,7 +65,7 @@ public class CustomerController {
 		
 		return "getCustomerList";
 	}
-	
+	*/
 	@GetMapping("/getCustomerOne")
 	public String getCustomerList(Model model,
 								@RequestParam(value="currentPage", defaultValue = "1") int currentPage,

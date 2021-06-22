@@ -16,6 +16,7 @@ import com.gd.sakila.service.FilmService;
 import com.gd.sakila.service.LanguageService;
 import com.gd.sakila.vo.Category;
 import com.gd.sakila.vo.FilmForm;
+import com.gd.sakila.vo.FilmView;
 import com.gd.sakila.vo.Language;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,17 @@ public class FilmController {
 		int filmId = filmService.addFilm(filmForm); //참초타입은 필드면과name이 같으면 맵핑
 		return "redirect:/admin/getFilmOne?filmId="+filmId;
 	}
-	
+	@GetMapping("/getFilmList")
+	public String getFilmList(Model model) { //Double이 쓰일일이 없어서 그냥 스트링으로	
+		
+		List<FilmView> filmList = filmService.getFilmList();	
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmController.getFilmList filmList : " + filmList);
+		
+		model.addAttribute("filmList", filmList);
+		
+		return "getFilmList";
+	}
+	/*ui적용하면서 간소화
 	@GetMapping("/getFilmList")
 	public String getFilmList(Model model,
 							@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
@@ -88,6 +99,8 @@ public class FilmController {
 		
 		return "getFilmList";
 	}
+	*/
+	
 	//
 	@GetMapping("/getFilmOne")
 	public String getFilmOne(Model model, 

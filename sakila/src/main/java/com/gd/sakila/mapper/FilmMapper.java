@@ -11,7 +11,8 @@ import com.gd.sakila.vo.Page;
 
 @Mapper
 public interface FilmMapper {
-	List<FilmView> selectFilmList(Map<String, Object> map);
+	//List<FilmView> selectFilmList(Map<String, Object> map); ui적용하면서 간소화
+	List<FilmView> selectFilmList();
 	int selectFilmTotal(Map<String, Object> map);
 	List<Integer> selectFilmInStock(Map<String, Object> map);
 	List<Integer> selectFilmNotInStock(Map<String, Object> map);

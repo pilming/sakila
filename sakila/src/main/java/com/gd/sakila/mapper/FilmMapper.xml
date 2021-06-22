@@ -56,7 +56,8 @@
 		   rating rating,
 		   actors actors
 		FROM  nicer_but_slower_film_list
-		<where>
+		<!-- ui적용하면서 간소화 -->
+		<!-- <where> 
 			<if test="category != null and category != ''">
 				AND category = #{category}
 			</if>
@@ -73,7 +74,7 @@
 				AND actors LIKE CONCAT('%',#{searchActor},'%')
 			</if>
 	    </where>
-		LIMIT #{page.beginRow}, #{page.rowPerPage}
+		LIMIT #{page.beginRow}, #{page.rowPerPage} -->
 	</select>
 	
 	<!-- 매개변수로 페이지 전달 맵으로 변경해야됨-->

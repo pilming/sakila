@@ -26,6 +26,7 @@ public class CustomerService {
 		int row = customerMapper.updateCustomerActiveByscheduler();
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ 휴먼고객 처리 행수 :" +row);
 	}
+	/* ui적용하면서 간소화
 	public Map<String, Object> getCustomerList(Map<String, Object> map) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ CustomerService.getCustomerList 매개변수 map : "+ map);
 		
@@ -62,6 +63,17 @@ public class CustomerService {
 		returnMap.put("CustomerList", CustomerList);
 		
 		return returnMap;
+	}
+	*/
+	public List<Map<String, Object>> getCustomerList() {
+
+		List<Map<String, Object>> CustomerList = customerMapper.selectCustomerList();
+		
+		for (Map<String, Object> m : CustomerList) {
+			int delayCount = customerMapper.selectBlackConsumer((int)m.get("customerId"));
+			m.put("delayCount", delayCount);
+		}	
+		return CustomerList;
 	}
 	
 	public Map<String, Object> getCustomerOne(int customerId) {

@@ -35,8 +35,18 @@ public class ActorController {
 		return "redirect:/admin/getActorList";
 	}
 	
+	@GetMapping("/getActorList")
+	public String getActorList(Model model) {
+		
+		List<Actor> actorList = actorService.getActorList();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorController.getActorList actorList : " + actorList.size());
+		
+		model.addAttribute("actorList",actorList);
+		
+		return "getActorList";
+	}
 	
-
+	/*ui적용하면서 간소화
 	@GetMapping("/getActorList")
 	public String getActorList(Model model,
 								@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
@@ -65,7 +75,7 @@ public class ActorController {
 		
 		return "getActorList";
 	}
-	
+	*/
 	@GetMapping("/getActordOne")
 	public String getActordOne(Model model,
 								@RequestParam(value = "actorId", required = false) int actorId) {

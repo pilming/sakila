@@ -10,7 +10,8 @@ import com.gd.sakila.vo.Page;
 
 @Mapper
 public interface BoardMapper {
-	List<Board> selectBoardList(Map<String, Object> parmMap);
+	List<Board> selectBoardList();
+	//List<Board> selectBoardList(Map<String, Object> parmMap); ui적용하면서 간소화
 	int selectBoardTotal(String searchWord);
 	Map<String, Object> selectBoardOne(int boardId);
 	int insertBoard(Board board);

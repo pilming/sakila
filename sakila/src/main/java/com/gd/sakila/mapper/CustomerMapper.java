@@ -11,6 +11,7 @@ import com.gd.sakila.vo.CustomerForm;
 public interface CustomerMapper {
 	int updateCustomerActiveByscheduler();
 	List<Map<String, Object>> selectCustomerList(Map<String, Object> map);
+	List<Map<String, Object>> selectCustomerList();
 	int selectCustomerTotal(Map<String, Object> map);
 	Map<String, Object> selectCustomerOne(int customerId);
 	Double selectPaymentByCustomerId(int customerId);

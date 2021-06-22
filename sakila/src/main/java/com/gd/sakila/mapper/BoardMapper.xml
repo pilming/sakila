@@ -9,13 +9,13 @@
 			insert_date insertDate
 		FROM
 			board
-		<where>
+		<!-- <where>ui적용하면서 간소화
 			<if test="searchWord != null">
 				board_title LIKE CONCAT('%',#{searchWord},'%')
 			</if>
 		</where>
 		ORDER BY insert_date DESC
-		LIMIT #{page.beginRow}, #{page.rowPerPage}
+		LIMIT #{page.beginRow}, #{page.rowPerPage} -->
 	</select>
 	
 	<select id="selectBoardTotal" resultType="Integer" parameterType="String">

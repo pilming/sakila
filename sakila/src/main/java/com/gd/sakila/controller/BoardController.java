@@ -1,5 +1,6 @@
 package com.gd.sakila.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +74,17 @@ public class BoardController {
 	      model.addAttribute("commentList", map.get("commentList"));
 	      return "getBoardOne";
 	   }
-
 	
+	@GetMapping("/getBoardList")
+	public String getBoardList(Model model) {
+		
+		 List<Board> boardList = boardService.getBoardList();	
+		model.addAttribute("boardList", boardList);
+		
+		return "getBoardList";
+	}
+	
+	/*ui적용하면서 간소화
 	@GetMapping("/getBoardList")
 	public String getBoardList(Model model,
 							@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
@@ -93,7 +103,7 @@ public class BoardController {
 		
 		return "getBoardList";
 	}
-	
+	*/
 	
 	// 수정 폼
    @GetMapping("/modifyBoard")

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>고객 목록</title>
+    <title>재고 목록</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -24,60 +24,70 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">고객 목록</h1>
+                        <h1 class="mt-4">재고 목록</h1>
                         <div class="card mb-4">
                             <div class="card-body">
-                                Sakila 고객 목록입니다.
+                                Sakila 재고 목록입니다.
                             </div>
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-hands-helping"></i>
-                                CUSTOMER LIST
+                                <i class="fas fa-boxes"></i>
+                                INVENTORY LIST
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>customerId</th>
-                                            <th>store</th>
-                                            <th>name</th>
-                                            <th>email</th>
-                                            <th>status</th>
-                                            <th>blackList</th>
+                                            <th>Film ID</th>
+											<th>Film Title</th>
+											<th>Store</th>
+											<th>총 수량</th>
+											<th>대여 중</th>
+											<th>대여 가능 수량</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>customerId</th>
-                                            <th>store</th>
-                                            <th>name</th>
-                                            <th>email</th>
-                                            <th>status date</th>
-                                            <th>blackList</th>
+                                            <th>Film ID</th>
+											<th>Film Title</th>
+											<th>Store</th>
+											<th>총 수량</th>
+											<th>대여 중</th>
+											<th>대여 가능 수량</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-							            <c:forEach var="c" items="${customerList}">
-							                <tr>
-							                	<td>${c.customerId}</td>
-							                	<c:if test="${c.storeId == 1}">
-							                		<td>store 1</td>
-							                	</c:if>
-							                	<c:if test="${c.storeId == 2}">
-							                		<td>store 2</td>
-							                	</c:if>
-							                	<td><a href ="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${c.customerId}">${c.name}</a></td>
-							                	<td>${c.email}</td>
-							                	<td>${c.active}</td>
-							               		<c:if test="${c.delayCount > 15}">
-							               			<td style="color:red">BLACK CONSUMER</td>
-							               		</c:if>
-							               		<c:if test="${!(c.delayCount > 15)}">
-							               			<td>&nbsp;</td>
-							               		</c:if>
-							                </tr>
-							            </c:forEach>
+							            <c:forEach var="i" begin="${beginRow}" end="${rowPerPage-1}">
+											<tr>
+												<c:if test="${list[i].filmId==list[i-1].filmId}">
+													<c:if test="${list[i].storeId == 1}">
+								                		<td>store 1</td>
+								                	</c:if>
+								                	<c:if test="${list[i].storeId == 2}">
+								                		<td>store 2</td>
+								                	</c:if>
+													<td>${list[i].total}</td>
+													<td>${notStockCnt[i]}</td>
+													<td>${stockCnt[i]}</td>
+												</c:if>
+											</tr>
+											<tr>
+												<c:if test="${list[i].filmId!=list[i-1].filmId}">
+													<td rowspan="2">${list[i].filmId}</td>
+													<td rowspan="2"><a href="${pageContext.request.contextPath}/admin/getInventoryOne?filmId=${list[i].filmId}&title=${list[i].title}">${list[i].title}</a></td>
+													<c:if test="${list[i].storeId == 1}">
+								                		<td>store 1</td>
+								                	</c:if>
+								                	<c:if test="${list[i].storeId == 2}">
+								                		<td>store 2</td>
+								                	</c:if>
+													<td>${list[i].total}</td>
+													<td>${notStockCnt[i]}</td>
+													<td>${stockCnt[i]}</td>
+												</c:if>
+											</tr>
+										</c:forEach>
                                     </tbody>
                                 </table>
                             </div>

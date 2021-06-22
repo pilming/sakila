@@ -21,7 +21,21 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class InventoryController {
 	@Autowired InventoryService inventoryService;
-	
+	@GetMapping("/getInventoryList")
+	public String getInventoryInfoList(Model model) {
+		
+		Map<String, Object> map = inventoryService.getInventoryInfoList(parmMap);
+		model.addAttribute("rowPerPage", map.get("rowPerPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("stockCnt", map.get("stockCnt"));
+		model.addAttribute("notStockCnt", map.get("notStockCnt"));
+		
+		return "getInventoryList";
+	}
+	/*ui적용하면서 간소화
 	@GetMapping("/getInventoryList")
 	public String getInventoryInfoList(Model model,
 										@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
@@ -47,7 +61,7 @@ public class InventoryController {
 		
 		return "getInventoryList";
 	}
-	
+	*/
 	@GetMapping("/getInventoryOne")
 	public String getInventoryOne(Model model,
 								@RequestParam(value="filmId", required = true) int filmId,

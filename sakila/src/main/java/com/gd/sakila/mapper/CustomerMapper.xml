@@ -23,7 +23,8 @@
 			END active
 		FROM 
 			customer c
-		<where>
+		<!-- ui적용하면서 아래내용 생략 -->
+		<!-- <where>
 			<if test="storeId != 0">
 				AND c.store_id = #{storeId}
 			</if>
@@ -31,7 +32,7 @@
 				AND CONCAT(c.first_name,' ',c.last_name) LIKE CONCAT('%', #{searchWord}, '%')
 			</if>
 		</where>
-		LIMIT #{page.beginRow}, #{page.rowPerPage}
+		LIMIT #{page.beginRow}, #{page.rowPerPage} -->
 	</select>
 	<select id="selectCustomerTotal"
 			parameterType="java.util.Map"

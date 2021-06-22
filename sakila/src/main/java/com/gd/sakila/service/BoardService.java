@@ -127,7 +127,15 @@ public class BoardService {
 
       return map;
 	}
-
+	public List<Board> getBoardList() {
+		
+		List<Board> boardList = boardMapper.selectBoardList(); // Page
+		
+		log.debug("BoardService▶▶▶▶▶▶ boardList: "+boardList);
+		
+		return boardList;
+	}
+	/*ui적용하면서 간소화
 	public Map<String, Object> getBoardList(int currentPage, int rowPerPage, String searchWord) {
 		//1
 		int boardTotal = boardMapper.selectBoardTotal(searchWord); // searchWord
@@ -150,4 +158,5 @@ public class BoardService {
 		map.put("boardList", boardList);
 		return map;
 	}
+	*/
 }

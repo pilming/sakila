@@ -49,7 +49,13 @@ public class FilmService {
 		
 		return film.getFilmId();
 	}
-	
+	public List<FilmView> getFilmList() {		
+		List<FilmView> filmList = filmMapper.selectFilmList();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmList filmList :" + filmList);
+		
+		return filmList;
+	}
+	/*
 	public Map<String, Object> getFilmList(Map<String, Object> parmMap) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 currentPage : " + parmMap.get("currentPage"));
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶FilmService.getFilmList 매개변수 rowPerPage : " + parmMap.get("rowPerPage"));
@@ -112,7 +118,7 @@ public class FilmService {
 		
 		return returnMap;
 	}
-	
+	*/
 	public Map<String, Object> getFilmOne(int filmId) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ FilmService.getFilmOne 매개변수  filmId:" + filmId);
 		

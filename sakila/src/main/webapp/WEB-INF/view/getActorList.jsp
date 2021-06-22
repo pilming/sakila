@@ -1,59 +1,81 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>getActorList</title>
-<!-- bootstrap을 사용하기 위한 CDN주소 -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
- 
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>배우 목록</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 </head>
-<div class="container">
-    <h1>getActorList</h1>
-    <jsp:include page="/WEB-INF/inc/navigation.jsp"></jsp:include>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>actorId</th>
-                <th>actorName</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="a" items="${actorList}">
-                <tr>
-                	<!-- 추가적으로 배우이름 누르면 상세페이지로 이동하고 거기서 출연영화들 보여주는것으로 바꾸기 (영화는 필름 테이블과 조인해서 id값 가져오기) -->
-                	<td>${a.actorId}</td>
-                	<!-- 상세페이지 작성예정 -->
-                    <td><a href="${pageContext.request.contextPath}/admin/getActordOne?actorId=${a.actorId}">${a.firstName} ${a.lastName}</a></td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
-  
-    <!-- 검색어 입력창 -->
-    <form action="" method="get">
-        <label for="searchWord">검색어(이름) :</label> 
-        <input name="searchWord" type="text">
-        <button type="submit">검색</button>
-    </form>
-    
-    <ul class="pager">
-        <c:if test="${currentPage > 1}">
-            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getActorList?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
-        </c:if>
-        <c:if test="${currentPage < lastPage}">
-            <li class="next"><a href="${pageContext.request.contextPath}/admin/getActorList?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
-        </c:if>
-    </ul>
-    <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addActor">배우추가</a>
-    </div>
-</div>
-</body>
+<body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <jsp:include page="/WEB-INF/inc/navBar.jsp"></jsp:include>
+        </nav>
+        <div id="layoutSidenav">
+        	<div id="layoutSidenav_nav">
+            	<jsp:include page="/WEB-INF/inc/sideNavBar.jsp"></jsp:include>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">배우 목록</h1>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                Sakila 배우 목록입니다.
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-user-secret"></i>
+                                ACTOR LIST
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>actorId</th>
+                							<th>actorName</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>actorId</th>
+                							<th>actorName</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+							            <c:forEach var="a" items="${actorList}">
+							                <tr>
+							                	<!-- 추가적으로 배우이름 누르면 상세페이지로 이동하고 거기서 출연영화들 보여주는것으로 바꾸기 (영화는 필름 테이블과 조인해서 id값 가져오기) -->
+							                	<td>${a.actorId}</td>
+							                	<!-- 상세페이지 작성예정 -->
+							                    <td><a href="${pageContext.request.contextPath}/admin/getActordOne?actorId=${a.actorId}">${a.firstName} ${a.lastName}</a></td>
+							                </tr>
+							            </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Choi Jae Hyeon 2021</div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="${pageContext.request.contextPath}/js/datatables-simple-demo.js"></script>
+    </body>
 </html>
