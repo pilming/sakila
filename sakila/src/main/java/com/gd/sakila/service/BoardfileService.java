@@ -1,7 +1,6 @@
 package com.gd.sakila.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +22,18 @@ public class BoardfileService {
 	public int addBoardfile(MultipartFile multipartFile, int boardId) {
 		// 1) 물리적 파일 저장
 		File temp = new File("");
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ temp경로 :"+temp);
 		// 프로젝트 경로
 		String path = temp.getAbsolutePath();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ path경로 :"+path);
 		// 확장자
 		int p = multipartFile.getOriginalFilename().lastIndexOf(".");
 		String ext = multipartFile.getOriginalFilename().substring(p);
 		// 확장자를 제외한 파일 이름
 		String prename = UUID.randomUUID().toString().replace("-", "");
-		File file = new File(path+"\\src\\main\\webapp\\resource\\"+prename+ext);
+		File file = new File("/home/ubuntu/goodee/tomcat9/webapps/source/"+prename+ext);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ multipartFile :" + multipartFile);
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ file :" + file);
 		try {
 			multipartFile.transferTo(file); // multipart안에 파일을 빈file로 복사
 		} catch (Exception e) {

@@ -68,7 +68,7 @@
                    		<!-- 보드파일을 출력하는 반복문 코드 구현 -->
                    		<c:forEach var="f" items="${boardfileList}">
 							<div>
-								<a href="${pageContext.request.contextPath}/resource/${f.boardfileName}">
+								<a href="/resource/${f.boardfileName}">
 									${f.boardfileName}
 								</a>
 								<a href="${pageContext.request.contextPath}/admin/removeBoardfile?boardfileId=${f.boardfileId}&boardId=${f.boardId}&boardfileName=${f.boardfileName}"><button type="button">파일삭제</button></a>

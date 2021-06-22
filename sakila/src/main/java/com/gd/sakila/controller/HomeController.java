@@ -25,6 +25,12 @@ public class HomeController {
 		log.debug("test");
 		return "home";
 	}
+	@GetMapping("/login")
+	public String home2() {
+		System.out.println("home controller");
+		log.debug("test");
+		return "login";
+	}
 	@GetMapping("/admin/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
