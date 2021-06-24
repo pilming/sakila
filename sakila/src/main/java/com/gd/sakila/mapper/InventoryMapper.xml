@@ -10,14 +10,15 @@
 		FROM 
 			inventory i 
 			LEFT JOIN film f ON i.film_id = f.film_id 
-		<where>
+		GROUP BY i.film_id, i.store_id
+		<!-- ui적용하면서 간소화 -->
+		<!-- <where>
 			<if test="searchWord!=null and searchWord != ''">
 				title LIKE CONCAT('%', #{searchWord}, '%')
 			</if>
 		</where>
-		GROUP BY i.film_id, i.store_id
 		
-		LIMIT #{page.beginRow}, #{page.rowPerPage}
+		LIMIT #{page.beginRow}, #{page.rowPerPage} -->
 	</select>
 	<select id="selectInventoryTotal" resultType="int">
 		SELECT 

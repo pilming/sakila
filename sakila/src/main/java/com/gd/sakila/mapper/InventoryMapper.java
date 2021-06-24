@@ -9,7 +9,8 @@ import com.gd.sakila.vo.Page;
 
 @Mapper
 public interface InventoryMapper {
-	List<Map<String, Object>> selectInventoryInfoList(Map<String, Object> map);
+	List<Map<String, Object>> selectInventoryInfoList();
+	//List<Map<String, Object>> selectInventoryInfoList(Map<String, Object> map); ui적용하면서 간소화
 	List<Integer> selectInventoryTotal();
 	int selectInventoryStockCnt(Map<String, Object> map);
 	List<Integer> selectInventoryOneStock(Map<String, Object> map);

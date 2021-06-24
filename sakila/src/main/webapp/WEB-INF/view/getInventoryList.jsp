@@ -1,82 +1,85 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>getInventoryList</title>
-<!-- bootstrap을 사용하기 위한 CDN주소 -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
- 
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>재고 목록</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 </head>
-<div class="container">
-    <h1>getInventoryList</h1>
-    <jsp:include page="/WEB-INF/inc/navigation.jsp"></jsp:include>
-    <table class="table">
-		<thead>
-			<tr>
-				<th>Film ID</th>
-				<th>Film Title</th>
-				<th>Store</th>
-				<th>총 수량</th>
-				<th>대여 중</th>
-				<th>대여 가능 수량</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="i" begin="${beginRow}" end="${rowPerPage-1}">
-				<tr>
-					<c:if test="${list[i].filmId==list[i-1].filmId}">
-						<c:if test="${list[i].storeId == 1}">
-	                		<td>store 1</td>
-	                	</c:if>
-	                	<c:if test="${list[i].storeId == 2}">
-	                		<td>store 2</td>
-	                	</c:if>
-						<td>${list[i].total}</td>
-						<td>${notStockCnt[i]}</td>
-						<td>${stockCnt[i]}</td>
-					</c:if>
-				</tr>
-				<tr>
-					<c:if test="${list[i].filmId!=list[i-1].filmId}">
-						<td rowspan="2">${list[i].filmId}</td>
-						<td rowspan="2"><a href="${pageContext.request.contextPath}/admin/getInventoryOne?filmId=${list[i].filmId}&title=${list[i].title}">${list[i].title}</a></td>
-						<c:if test="${list[i].storeId == 1}">
-	                		<td>store 1</td>
-	                	</c:if>
-	                	<c:if test="${list[i].storeId == 2}">
-	                		<td>store 2</td>
-	                	</c:if>
-						<td>${list[i].total}</td>
-						<td>${notStockCnt[i]}</td>
-						<td>${stockCnt[i]}</td>
-					</c:if>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-  
-    <!-- 검색어 입력창 -->
-    <form action="${pageContext.request.contextPath}/admin/getInventoryList" method="get">
-        <label for="searchWord">검색어(이름) :</label> 
-        <input name="searchWord" type="text">
-        <button type="submit">검색</button>
-    </form>
-    
-    <ul class="pager">
-        <c:if test="${currentPage > 1}">
-            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
-        </c:if>
-        <c:if test="${currentPage < lastPage}">
-            <li class="next"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
-        </c:if>
-    </ul>
-</div>
-</body>
+<body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <jsp:include page="/WEB-INF/inc/navBar.jsp"></jsp:include>
+        </nav>
+        <div id="layoutSidenav">
+        	<div id="layoutSidenav_nav">
+            	<jsp:include page="/WEB-INF/inc/sideNavBar.jsp"></jsp:include>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">재고 목록</h1>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                Sakila 재고 목록입니다.
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-boxes"></i>
+                                INVENTORY LIST
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Film ID</th>
+											<th>Film Title</th>
+											<th>Store</th>
+											<th>보유 수량</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Film ID</th>
+											<th>Film Title</th>
+											<th>Store</th>
+											<th>보유 수량</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+							            <c:forEach var="i" items ="${inventoryList}">
+											<tr>
+												<td>${i.filmId}</td>
+												<td><a href="${pageContext.request.contextPath}/admin/getInventoryOne?filmId=${i.filmId}&title=${i.title}">${i.title}</a></td>
+												<td>${i.storeId}</td>
+												<td>${i.total}</td>
+											</tr>
+										</c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Choi Jae Hyeon 2021</div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="${pageContext.request.contextPath}/js/datatables-simple-demo.js"></script>
+    </body>
 </html>

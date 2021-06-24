@@ -24,15 +24,10 @@ public class InventoryController {
 	@GetMapping("/getInventoryList")
 	public String getInventoryInfoList(Model model) {
 		
-		Map<String, Object> map = inventoryService.getInventoryInfoList(parmMap);
-		model.addAttribute("rowPerPage", map.get("rowPerPage"));
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("searchWord", searchWord);
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("stockCnt", map.get("stockCnt"));
-		model.addAttribute("notStockCnt", map.get("notStockCnt"));
-		
+		List<Map<String, Object>> inventoryList = inventoryService.getInventoryInfoList();
+		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶InventoryController.getInventoryInfoList inventoryList : " + inventoryList.size());
+		model.addAttribute("inventoryList", inventoryList);
+
 		return "getInventoryList";
 	}
 	/*ui적용하면서 간소화

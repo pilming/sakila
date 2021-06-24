@@ -19,17 +19,23 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 	@Autowired StaffService staffService;
 	//Logger log  = LoggerFactory .getLogger(this.getClass()); 에노테이션으로 대체
-	@GetMapping({"/", "/home", "/index"})
+	@GetMapping({"/", "/home"})
 	public String home() {
 		System.out.println("home controller");
 		log.debug("test");
 		return "home";
 	}
-	@GetMapping("/login")
+	@GetMapping("/login1")
+	public String home1() {
+		System.out.println("home controller");
+		log.debug("test");
+		return "templogin";
+	}
+	@GetMapping("/index")
 	public String home2() {
 		System.out.println("home controller");
 		log.debug("test");
-		return "login";
+		return "index";
 	}
 	@GetMapping("/admin/logout")
 	public String logout(HttpSession session) {

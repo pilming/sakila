@@ -4,8 +4,8 @@
 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
         <div class="nav">
-            <a class="nav-link" href="index.html">
-                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            <a class="nav-link" href="${pageContext.request.contextPath}/">
+                <div class="sb-nav-link-icon"><i class="fas fa-chart-area me-1"></i></div>
                 HOME
             </a>
             <a class="nav-link" href="${pageContext.request.contextPath}/admin/getStaffList">
@@ -20,7 +20,7 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-user-secret"></i></div>
                 배우 목록
             </a>
-            <a class="nav-link" href="charts.html">
+            <a class="nav-link" href="${pageContext.request.contextPath}/admin/getInventoryList">
                 <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
                 영화별 재고 목록
             </a>
@@ -32,7 +32,7 @@
                 <div class="sb-nav-link-icon"><i class="far fa-calendar"></i></div>
                 게시판
             </a>
-            <a class="nav-link" href="tables.html">
+            <a class="nav-link" href="${pageContext.request.contextPath}/admin/logout">
                 <div class="sb-nav-link-icon"></div>
                 로그아웃
             </a>

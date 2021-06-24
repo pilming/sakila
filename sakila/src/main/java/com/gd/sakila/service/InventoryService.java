@@ -22,6 +22,13 @@ public class InventoryService {
 	@Autowired InventoryMapper inventoryMapper;
 	@Autowired FilmMapper filmMapper;
 	
+	public List<Map<String, Object>> getInventoryInfoList(){	
+
+		List<Map<String, Object>> inventoryList = inventoryMapper.selectInventoryInfoList();
+
+		return inventoryList;
+	}
+	/*
 	public Map<String, Object> getInventoryInfoList(Map<String, Object> map){	
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶InventoryService.getInventoryInfoList 매개변수 currentPage : " + map.get("currentPage"));
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶InventoryService.getInventoryInfoList 매개변수 rowPerPage : " + map.get("rowPerPage"));
@@ -80,6 +87,7 @@ public class InventoryService {
 		returnMap.put("notStockCnt", notStockCnt);
 		return returnMap;
 	}
+	*/
 	public List<Map<String, Object>> getInventoryOne(int filmId) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ InventoryService.getInventoryOne 매개변수 filmId:"+filmId);
 
