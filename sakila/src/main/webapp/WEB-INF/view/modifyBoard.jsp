@@ -3,17 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>modifyBoard</title>
-<!-- bootstrap을 사용하기 위한 CDN주소 -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+	<title>BOARD VIEW(spring mvc 방식)</title>
+	<link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+	<!-- jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
    $(document).ready(function(){
       console.log("document ready!");
@@ -35,40 +34,70 @@
    });
 </script>
 </head>
-<body>
-<div class="container">
-    <h1>modifyBoard 수정</h1>
-    <form action="${pageContext.request.contextPath}/admin/modifyBoard" id="modifyForm" method="post">
-    	
-		<div class="form-group">
-		    <label for="boardId">boardId :</label> 
-		    <input class="form-control" name="boardId" id="boardId" type="text" readonly="readonly" value="${boardMap.boardId}" />
-		</div>
-		<div class="form-group">
-		    <label for="boardTitle">boardTitle :</label> 
-		    <input class="form-control" name="boardTitle" id="boardTitle" type="text" value="${boardMap.boardTitle}"/>
-		</div>
-		<div class="form-group">
-		    <label for="boardPw">boardPw :</label> 
-		    <input class="form-control" name="boardPw" id="boardPw" type="password" />
-		</div>
-		<div class="form-group">
-		    <label for="boardContent">boardContent :</label>
-		    <textarea class="form-control" name="boardContent" id="boardContent"
-		        rows="5" cols="50">${boardMap.boardContent}</textarea>
-		</div>
-		<div class="form-group">
-		    <label for="userName">userName :</label> 
-		    <input class="form-control" type="text" value = "${boardMap.username}" readonly="readonly"/>
-		</div>
-		<div class="form-group">
-		    <label for="insertDate">insertDate :</label> 
-		    <input class="form-control" type="text" value = "${boardMap.insertDate}" readonly="readonly"/>
-		</div>
-				
-       <button class="btn btn-default" id="btn" type="button">수정</button>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>
-    </form>
-</div>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <jsp:include page="/WEB-INF/inc/navBar.jsp"></jsp:include>
+    </nav>
+    <div id="layoutSidenav">
+    	<div id="layoutSidenav_nav">
+        	<jsp:include page="/WEB-INF/inc/sideNavBar.jsp"></jsp:include>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                	<br>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h1>modifyBoard</h1>
+                        </div>
+                    </div>
+                    <div class="container">
+					    <form action="${pageContext.request.contextPath}/admin/modifyBoard" id="modifyForm" method="post">
+					    	
+							<div class="form-group">
+							    <label for="boardId">boardId :</label> 
+							    <input class="form-control" name="boardId" id="boardId" type="text" readonly="readonly" value="${boardMap.boardId}" />
+							</div>
+							<div class="form-group">
+							    <label for="boardTitle">boardTitle :</label> 
+							    <input class="form-control" name="boardTitle" id="boardTitle" type="text" value="${boardMap.boardTitle}"/>
+							</div>
+							<div class="form-group">
+							    <label for="boardPw">boardPw :</label> 
+							    <input class="form-control" name="boardPw" id="boardPw" type="password" />
+							</div>
+							<div class="form-group">
+							    <label for="boardContent">boardContent :</label>
+							    <textarea class="form-control" name="boardContent" id="boardContent"
+							        rows="5" cols="50">${boardMap.boardContent}</textarea>
+							</div>
+							<div class="form-group">
+							    <label for="userName">userName :</label> 
+							    <input class="form-control" type="text" value = "${boardMap.username}" readonly="readonly"/>
+							</div>
+							<div class="form-group">
+							    <label for="insertDate">insertDate :</label> 
+							    <input class="form-control" type="text" value = "${boardMap.insertDate}" readonly="readonly"/>
+							</div>
+									
+					       <button class="btn btn-secondary" id="btn" type="button">수정</button>
+					        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/admin/getBoardOne?boardId=${boardMap.boardId}">돌아가기</a>
+					    </form>
+					</div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Choi Jae Hyeon 2021</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="${pageContext.request.contextPath}/js/datatables-simple-demo.js"></script>
 </body>
 </html>

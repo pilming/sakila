@@ -65,6 +65,9 @@
                         </div>
                     </div>
                 </main>
+                <div>
+                	<a href="${pageContext.request.contextPath}/admin/addBoard"><button class="btn btn-secondary" style="margin-left: 23px;">게시글작성</button></a>
+                </div>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">

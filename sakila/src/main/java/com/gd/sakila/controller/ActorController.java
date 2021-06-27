@@ -76,7 +76,7 @@ public class ActorController {
 		return "getActorList";
 	}
 	*/
-	@GetMapping("/getActordOne")
+	@GetMapping("/getActorOne")
 	public String getActordOne(Model model,
 								@RequestParam(value = "actorId", required = false) int actorId) {
 		log.debug("▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶▶ActorController.getActordOne 매개변수 actorId : " + actorId);
@@ -86,6 +86,6 @@ public class ActorController {
 		
 		model.addAttribute("actorOneInfoList",actorOneInfoList);
 		
-		return "getActordOne";
+		return "getActorOne";
 	}
 }

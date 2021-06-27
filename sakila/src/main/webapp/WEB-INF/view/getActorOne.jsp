@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,23 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-	<title>INVENTORY VIEW(spring mvc 방식)</title>
+	<title>ACTOR VIEW(spring mvc ���)</title>
 	<link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 	<!-- jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#addButton').click(function() {
-			if ($('#storId').val() == '') {
-                alert('storId를 선택해야됩니다.');
-                $('#storId').focus();
-            } else {
-                $('#addForm').submit();
-            }
-        });
-    });
-</script>
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -39,32 +28,54 @@
                 	<br>
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h1>addInventory</h1>
+                            <h1>getActorOne</h1>
                         </div>
                     </div>
                     <div class="container">
-				        <form id="addForm" action="${pageContext.request.contextPath}/admin/addInventory" method="post">
-				        	<input type = "hidden" name ="filmId" value="${filmId}">
-				            <div class="form-group">
-				                <label for="title">title :</label> 
-				                <input class="form-control" name="title" type="text" readonly="readonly" value="${title}"/>
-				            </div>
-							<div class="form-group">
-				                <label for="storId">storId :</label> 
-				                <select name ="storeId" id = "storId" class="form-control">
-				                	<option value="">선택</option>
-				                	<option value="1">store1</option>
-				                	<option value="2">store2</option>
-				                </select>
-				            </div>
-				            <br>
-				            <div>
-				                <input class="btn btn-secondary" id="addButton" type="button" value="재고추가" /> 
-				                <button class="btn btn-secondary" type="button" onclick='history.back()'>뒤로가기</button>
-				                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/admin/getInventoryList">글목록</a>
-				            </div>
-				        </form>
-				    </div>
+				     <table class="table table-hover">
+				         <tbody>
+							<tr>
+				                   <td>actorId</td>
+				                   <td>${actorOneInfoList[0].actorId}</td>
+				            </tr>
+				            <tr>
+				                   <td>name</td>
+				                   <td>${actorOneInfoList[0].name}</td>
+				            </tr>
+				     </table>
+				     <h3>�⿬��ȭ</h3>
+				     <table class="table table-hover">
+				            <tr>
+				            	<td>
+						       		<c:set var="category" value=""/>
+									<c:forEach var="a" items ="${actorOneInfoList}">
+										<c:if test="${category eq a.category}">
+											<span>,&nbsp;</span><a href ="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${a.filmId}">${a.title}</a> 
+										</c:if>
+										
+										<c:if test="${!(category eq a.category)}">
+											</td>
+											<td></td>
+											</tr>
+											<tr>
+												<td>${a.category}</td>
+												<td></td>
+											</tr>
+											<tr>
+											<td>
+											<a href ="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${a.filmId}">${a.title}</a> 
+											<c:set var="category" value="${a.category}"/>
+										</c:if>
+									</c:forEach>
+								<td>
+							</tr>
+				        </tbody>
+				    </table>
+				    	<div>
+						    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/admin/getActorList">�����</a>	
+				    	</div>
+					
+				</div>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">

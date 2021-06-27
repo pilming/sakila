@@ -74,6 +74,9 @@
                         </div>
                     </div>
                 </main>
+                <div>
+                	<a href="${pageContext.request.contextPath}/admin/addFilm"><button class="btn btn-secondary" style="margin-left: 23px;">영화추가</button></a>
+                </div>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">

@@ -55,7 +55,7 @@
 							                	<!-- 추가적으로 배우이름 누르면 상세페이지로 이동하고 거기서 출연영화들 보여주는것으로 바꾸기 (영화는 필름 테이블과 조인해서 id값 가져오기) -->
 							                	<td>${a.actorId}</td>
 							                	<!-- 상세페이지 작성예정 -->
-							                    <td><a href="${pageContext.request.contextPath}/admin/getActordOne?actorId=${a.actorId}">${a.firstName} ${a.lastName}</a></td>
+							                    <td><a href="${pageContext.request.contextPath}/admin/getActorOne?actorId=${a.actorId}">${a.firstName} ${a.lastName}</a></td>
 							                </tr>
 							            </c:forEach>
                                     </tbody>
@@ -64,6 +64,9 @@
                         </div>
                     </div>
                 </main>
+                <div>
+                	<a href="${pageContext.request.contextPath}/admin/addActor"><button class="btn btn-secondary" style="margin-left: 23px;">배우추가</button></a>
+                </div>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
